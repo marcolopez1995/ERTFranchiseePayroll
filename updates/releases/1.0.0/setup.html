@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Set up Crispy King Payroll</title><style>
+*{box-sizing:border-box}body{margin:0;background:#fff9ed;color:#421a1e;font:16px Arial,sans-serif}
+main{max-width:700px;margin:36px auto;background:white;border:1px solid #e4cbc0;border-radius:12px;overflow:hidden}
+header{background:#ad1825;color:white;padding:26px;border-left:6px solid #ffcd32}h1{margin:0;font-size:26px}
+form{padding:26px}label{display:block;margin:15px 0 6px;font-weight:bold}
+input,textarea{width:100%;padding:10px;font:inherit;border:1px solid #c9aaa0;border-radius:5px}textarea{min-height:130px}
+button{background:#ad1825;color:white;padding:12px 20px;border:0;border-radius:6px;font:inherit;font-weight:bold;cursor:pointer}
+p{line-height:1.5}small{display:block;color:#71554e;margin:6px 0}#status{color:#ad1825}
+</style></head><body><main><header><h1>Crispy King Franchise Payroll System</h1><p>Set up your local payroll</p></header>
+<form id="setup"><label for="business">Business / franchisee name</label><input id="business" maxlength="80" required>
+<label for="stores">Store names</label><textarea id="stores" maxlength="7100" required placeholder="Enter one store per line"></textarea><small>Up to 100 stores. You can add stores later.</small>
+<label for="start">First recording month</label><input id="start" type="month" min="2026-01" max="2099-12" value="2026-12" required>
+<label for="prepared">Prepared by</label><input id="prepared" maxlength="80">
+<label for="reviewed">Reviewed by</label><input id="reviewed" maxlength="80">
+<label for="approved">Approved by</label><input id="approved" maxlength="80">
+<p>Friday–Thursday payroll weeks are used. Start by adding crew in Weekly Payroll, then record attendance.</p>
+<button id="submit">Create my payroll</button><p id="status" role="status"></p></form></main>
+<script src="/support.js"></script><script src="/local-storage.js"></script><script>
+productRequest('/product').then(p=>{if(p.active){document.getElementById('business').value=p.license.business;document.getElementById('business').readOnly=true;}});
+document.getElementById("setup").onsubmit=event=>{
+ event.preventDefault();
+ const get=id=>document.getElementById(id);
+ const business=get("business").value.trim();
+ const stores=get("stores").value.split(/\r?\n/).map(s=>s.trim().replace(/\s+/g," ").toUpperCase()).filter(Boolean);
+ if(!stores.length||stores.length>100||new Set(stores).size!==stores.length||
+ stores.some(s=>s.length>70||/[\\/:*?"<>|]/.test(s))){
+  get("status").textContent="Enter 1–100 unique store names, up to 70 characters each, without filename symbols.";return;
+ }
+ try {
+  const key="crispy-king-payroll-periods-v2";
+  const previous=payrollStorage.getItem(key);
+  if(previous)throw new Error("This installation is already set up. Reload to open payroll.");
+  const startMonth=get("start").value;
+  const configuration={business,stores,startMonth,signOff:{prepared:get("prepared").value.trim(),reviewed:get("reviewed").value.trim(),approved:get("approved").value.trim()}};
+  payrollStorage.setItem(key,JSON.stringify({configuration,period:startMonth,periods:{},payroll:{},
+    roster:stores.map(()=>[]),picked:{},holidays:{},signOff:configuration.signOff,attendance:{},withdrawals:[],payReleases:[]}));
+  location.reload();
+ } catch(error){get("status").textContent=error.message;}
+};
+</script></body></html>

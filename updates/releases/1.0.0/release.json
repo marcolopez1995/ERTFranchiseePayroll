@@ -1,0 +1,11 @@
+{
+  "product": "ck-franchise-payroll",
+  "version": "1.0.0",
+  "manifestUrl": "https://raw.githubusercontent.com/marcolopez1995/ERTFranchiseePayroll/main/updates/latest.json",
+  "github": {
+    "owner": "marcolopez1995",
+    "repo": "ERTFranchiseePayroll",
+    "branch": "main",
+    "folder": "updates"
+  }
+}

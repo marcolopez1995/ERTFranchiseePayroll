@@ -1,0 +1,1597 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Crispy King Franchise Payroll System</title>
+<style>
+:root{color-scheme:light;--ink:#ad1825;--muted:#536574;--line:#dbe4eb;--gold:#ffe397;--paper:#fffaf0}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px Arial,sans-serif}header{background:var(--ink);border-top:5px solid #ffcd32;color:white;padding:28px max(20px,calc((100% - 1280px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}h1,h2,p{margin:0}header p{color:#ffe283;font-size:12px;font-weight:bold;letter-spacing:1.4px;margin-bottom:9px}h1{font-size:29px}main{max-width:1320px;margin:auto;padding:24px 20px}nav,.actions{display:flex;gap:8px;flex-wrap:wrap}button{border:1px solid var(--line);border-radius:7px;padding:9px 13px;color:var(--ink);background:white;font:inherit;font-size:13px;font-weight:bold;cursor:pointer}button:hover{border-color:#7d91a2}button[aria-pressed=true],.primary{background:var(--ink);color:white;border-color:var(--ink)}header .primary{background:var(--gold);color:var(--ink)}button:disabled{opacity:.5;cursor:wait}.panel{margin-top:18px;background:white;border:1px solid var(--line);border-radius:12px;padding:20px}.title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}h2{font-size:21px}.hint{color:var(--muted);margin:10px 0 16px;font-size:13px;line-height:1.5}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin:17px 0}.card{background:var(--paper);padding:14px;border-radius:7px}.card:last-child{background:var(--gold)}.card small{color:var(--muted);display:block;margin-bottom:8px}.card strong{font-size:22px}.table{overflow:auto}table{border-collapse:collapse;width:100%;min-width:880px;font-size:13px}th,td{text-align:right;padding:9px 7px;border-bottom:1px solid var(--line);white-space:nowrap}th{background:#edf2f6}th:first-child,td:first-child{text-align:left}td:first-child{font-weight:bold}td:last-child{font-weight:bold}tbody tr:nth-child(even){background:#fafbfd}input[type=number]{width:67px;font:inherit;border:1px solid #c1cfda;background:#fffaeb;border-radius:4px;padding:6px;text-align:right;color:var(--ink)}input:invalid{border:2px solid #b11}input:focus,button:focus-visible{outline:2px solid #b71925;outline-offset:2px}#status{margin-top:13px;font-size:13px;color:var(--muted);min-height:1.4em}dialog{border:1px solid var(--line);border-radius:10px;width:min(95vw,810px);max-height:90vh;padding:16px}dialog::backdrop{background:#1223329e}dialog img{display:block;width:100%;margin-top:10px} .file{display:none}@media(max-width:650px){main{padding:14px 10px}.panel{padding:13px}header{padding:20px}.card strong{font-size:18px}}
+
+#regular table{min-width:1920px}#regular table input{width:65px}#regular thead tr:first-child th{background:#ad1825;color:white}#regular select{padding:6px;font:inherit}#regular tfoot{background:#ffecb0;font-weight:bold}.signoff{display:flex;justify-content:space-between;margin:42px 0 14px;gap:30px}.signoff label{border-top:1px solid #abbac5;flex:1;min-width:0;padding-top:6px}.signoff input{display:block;margin-top:6px;width:100%;font:inherit;padding:6px;border:1px solid #c1cfda;border-radius:4px}.signoff strong{display:none}@media print{.signoff input{display:none}.signoff strong{display:block;margin-top:5px}}.mode{margin:12px 0}
+@media print{@page{size:A4 landscape;margin:9mm}body{background:white}body.print-payroll header,body.print-payroll main>div,body.print-payroll #stores,body.print-payroll .panel:not(#regular),body.print-payroll .no-print{display:none!important}body.print-payroll main,body.print-payroll #regular{margin:0;padding:0;border:0;max-width:none}body.print-payroll #regular .table{overflow:visible}body.print-payroll #regular table{min-width:0;font-size:7px;white-space:normal}body.print-payroll #regular th,body.print-payroll #regular td{padding:4px 2px;white-space:normal}body.print-payroll #regular table input{width:100%;border:0;background:none;padding:0;font-size:7px}body.print-payroll .signoff{margin-top:26px}}
+.roster{margin:14px 0}.roster form,.crew-option{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}.roster input{font:inherit;padding:5px}.roster #picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:4px 12px}.crew-option{margin:4px 0}.crew-option small{color:var(--muted)}
+
+[hidden]{display:none!important}
+.payroll-banner{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;background:#ad1825;border-left:5px solid #ffcd32;color:#fff;border-radius:8px;padding:20px 24px}
+.payroll-banner p,.payroll-branch small{display:block;color:#ffe283;font-weight:bold;font-size:11px;letter-spacing:.11em;margin-bottom:7px}
+.payroll-banner h2{font-size:clamp(23px,3vw,32px);line-height:1.05}.payroll-branch strong{font-size:19px}
+.payroll-coverage{padding:14px 0;color:#344b5d}.payroll-coverage>p{font-weight:bold}.payroll-coverage .actions{align-items:center}
+.payroll-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px;margin:2px 0 16px}
+.payroll-stats div{padding:11px 13px;background:#fff7df;border-radius:5px}.payroll-stats div:last-child{background:#ffe397}.payroll-stats small{display:block;color:#536574;margin-bottom:4px}.payroll-stats strong{font-size:19px}
+#regular .table{border:1px solid #dbe4eb;border-radius:7px}#regular thead tr:nth-child(2) th{background:#fff1c9}#regular tbody tr:nth-child(even){background:#fff9e9}
+#regular thead th:first-child,#regular tbody td:first-child{position:sticky;left:0;z-index:1}#regular tbody td:first-child{background:#fff;box-shadow:2px 0 0 #dbe4eb}#regular tbody tr:nth-child(even) td:first-child{background:#fff9e9}
+#regular tbody td:nth-last-child(2){font-weight:700;background:#fff3df}#regular tfoot th,#regular tfoot td{border-top:2px solid #9cb0c0;color:#ad1825}
+.signoff{gap:clamp(12px,4vw,46px)}.signatory{flex:1;min-width:0}.signoff .signatory label{display:block;border:0;border-top:1px solid #a8b9c6;color:#536574;padding-top:7px;font-size:12px}.signoff .signatory input{margin:0 0 4px;border:1px solid transparent;border-radius:4px;background:#fffaf0;font-weight:bold;color:#ad1825}.signoff .signatory strong{margin:0 0 4px;color:#ad1825}
+.payroll-print-value{display:none}
+@media print{
+  body.print-payroll #regular{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .payroll-banner{border-radius:0;padding:10px 14px;break-inside:avoid}.payroll-banner h2{font-size:17pt}.payroll-branch strong{font-size:13pt}
+  .payroll-coverage{padding:7px 0}.payroll-stats{margin:0 0 8px;gap:5px}.payroll-stats div{padding:5px 7px}.payroll-stats strong{font-size:12pt}
+  #regular table{table-layout:auto}#regular thead th:first-child,#regular tbody td:first-child{position:static;box-shadow:none}
+  #regular tbody tr,.signoff{break-inside:avoid}
+  .payroll-print-value{display:inline}
+  body.print-payroll #regular table input,body.print-payroll #regular .holiday-pick{display:none!important}
+  .signoff .signatory strong{display:block}.signoff .signatory input{display:none}
+}
+
+#regular thead tr:first-child th:nth-child(4){background:#86141e}
+#regular thead tr:nth-child(2) th:nth-child(n+10),#regular thead tr:first-child th:nth-child(5){background:#f7c5c7;color:#64141b}
+#regular tbody tr td:nth-child(n+11):nth-child(-n+22){background:#fff0f0}
+#regular tbody tr:nth-child(even) td:nth-child(n+11):nth-child(-n+22){background:#ffe6e7}
+#regular tfoot td:nth-child(n+11):nth-child(-n+22){background:#f7c5c7}
+#regular tbody tr td:nth-child(n+11):nth-child(-n+21) input[type=number]{background:#fffafa;border-color:#dfaeb1}
+.late-charge{display:block;color:#86141e;font-weight:bold;margin-top:4px}
+@media print{.late-charge{display:none}}
+:root{--ink:#421a1e;--line:#ecd6c9;--paper:#fffaf0}header,button[aria-pressed=true],.primary{background:#ad1825;color:white;border-color:#ad1825}header{border-top-color:#ffcd32}header .primary{background:#ffe397;color:#421a1e}#attendance input[type=number]{width:58px}#attendance select{font:inherit;max-width:150px;padding:5px;background:white;border:1px solid #ecd6c9;border-radius:4px}#attendance td.attendance-day{text-align:center}#attendance .attendance-day select{display:block;margin:0 auto 4px}#attendance .attendance-day input{font-size:12px}#attendance .actions{align-items:center}#attendance tbody tr:nth-child(even){background:#fff9e9}.attendance-year{margin-top:28px;padding-top:20px;border-top:2px solid #ffcd32}.attendance-year h2{margin-bottom:6px}.attendance-year thead th{background:#ad1825;color:white}
+#attendance .title{padding:14px 16px;background:#fff1ce;border-left:4px solid #ffcd32;border-radius:6px}
+#attendance .title h2{color:#86141e}#attendance .table{border:1px solid #ecd6c9;border-radius:7px}
+#attendance .attendance-summary{margin:24px 0}#attendance h2+.table{margin-top:10px}
+#attendanceHead th,#attendanceWeekHead th,#attendanceMonthHead th{background:#ad1825;color:#fff}
+#attendanceHead th{text-align:center}#attendanceHead th:first-child{text-align:left}
+#attendanceRows td:first-child,#attendanceHead th:first-child{position:sticky;left:0;z-index:1}
+#attendanceRows td:first-child{background:#fffaf0;box-shadow:2px 0 0 #ecd6c9}
+#attendanceRows td.attendance-day{min-width:103px;padding:8px 5px}
+#attendanceRows select{width:100%;font-weight:600;color:#421a1e}
+#attendanceRows .attendance-pending select{border-style:dashed;background:#fff8db;color:#715117}
+#attendanceRows .attendance-exception select{background:#fff0f0;border-color:#e3acb0}
+#attendanceRows td input:disabled{background:#f4f2ee}
+#attendance #attendanceStatus{margin:9px 0}
+.attendance-derived{font-weight:700;color:#64141b;background:#fff5d8} .attendance-derived[title]{cursor:help}.account-section{margin-top:24px;padding-top:18px;border-top:2px solid #ffcd32}.account-section .actions,#crewStatement .actions{align-items:center;margin:12px 0}.account-section label,#crewStatement label{font-weight:bold}.account-section select,.account-section input,#crewStatement select{font:inherit;padding:6px;border:1px solid #d8c9bd;border-radius:5px}.account-section input[type=number]{width:115px}#crewStatement h2{margin:12px 0}</style></head><body>
+<header><div><p>CRISPY KING FOOD STATION</p><h1>Crispy King Franchise Payroll System</h1></div><div class="actions"><button id="export" class="primary">Export monthly PDF + JPG ZIP</button><button id="backup">Back up entries</button><button id="restore">Restore entries</button><input class="file" type="file" id="file" accept=".json,application/json"></div></header>
+<main><p id="monthlyExportStatus" class="hint no-print" role="status" hidden></p><p id="backupStatus" class="hint no-print" role="status" hidden></p><div class="actions" style="margin-bottom:12px"><label for="period"><strong>Payroll month</strong></label><input id="period" type="month" min="2026-01" max="2099-12" style="font:inherit;padding:5px;border:1px solid #c1cfda;border-radius:5px"><span id="recordingCycle" class="hint" style="margin:0;align-self:center"></span></div><div class="actions no-print" style="margin:12px 0"><label>Find store <input id="storeSearch" type="search" placeholder="Store name"></label><button id="addStore">Add store</button></div><nav id="stores" aria-label="Store"></nav><nav class="mode no-print" aria-label="Payroll view"><button id="attendanceMode" aria-pressed="true">Attendance</button><button id="weeklyMode" aria-pressed="false">Weekly Payroll</button><button id="monthlyMode" aria-pressed="false">13th Month Pay</button><button id="savingsMode" aria-pressed="false">Savings</button></nav><section class="panel" id="monthly" hidden><div class="title"><h2 id="branch"></h2><div class="actions"><button id="preview">Preview management report</button><button id="openPayStatement">Individual statement</button></div></div><p class="hint">Friday–Thursday payroll. Weeks belong to the month in which Thursday falls. Days worked come from Attendance. Basic daily rates are editable.</p>
+<div class="cards" id="cards"></div><div class="table"><table><thead id="head"></thead><tbody id="rows"></tbody></table></div><p id="status" role="status" aria-live="polite"></p><section class="account-section"><h2>13th month pay withdrawals</h2><p class="hint">The selected payroll month sets the earnings year. Record midyear or other partial releases here. Available pay is based on earnings recorded through the withdrawal date, less previous releases for that earnings year.</p><form id="payReleaseForm" class="actions"><label>Crew member <select id="payReleaseCrew" required></select></label><label>Withdrawal date <input id="payReleaseDate" type="date" required></label><label>Amount (PHP) <input id="payReleaseAmount" type="number" min=".01" step=".01" required></label><button class="primary">Record withdrawal</button></form><p class="hint" id="payReleaseStatus" role="status"></p><div class="table"><table><thead><tr><th scope="col">Crew member</th><th scope="col">Earnings year</th><th scope="col">Withdrawal date</th><th scope="col">Amount (PHP)</th></tr></thead><tbody id="payReleaseRows"></tbody></table></div></section></section><section class="panel" id="regular" hidden><div class="payroll-banner"><div><p>CRISPY KING FOOD STATION</p><h2>Weekly Payroll Register</h2></div><div class="payroll-branch"><small>BRANCH</small><strong id="weeklyTitle"></strong></div></div><div class="title payroll-coverage"><p id="weeklyPeriod"></p><div class="actions no-print"><label for="payWeek">Payroll week</label><select id="payWeek"></select><button id="resetWeek">Reset payroll week</button><button id="downloadPayrollPDF" class="primary">Download PDF</button><button id="downloadPayrollJPG">Download JPG</button><button id="printPayroll">Print payroll</button></div></div><div class="payroll-stats" id="weeklyStats" aria-label="Payroll totals"></div><p id="payrollDownloadStatus" class="hint no-print" role="status"></p><details class="roster no-print" open><summary><strong>Select crew for this payroll</strong></summary><div id="picker"></div><form id="hireForm"><label>New crew name <input id="hireName" required maxlength="70"></label><label>Basic daily rate <input id="hireRate" type="number" min=".01" max="999999" step=".01" required></label><label>Start date <input id="hireDate" type="date" required></label><button>Add and select crew</button></form><form id="leaveForm"><label>Crew member <select id="leaveCrew"></select></label><label>Last working day <input id="leaveDate" type="date" required></label><button>Record resignation</button><button type="button" id="clearLeave">Clear resignation date</button></form><form id="renameForm"><label>Crew member <select id="renameCrew"></select></label><label>Edit name <input id="renameName" required maxlength="70"></label><button>Save crew name</button></form><form id="transferForm"><label>Transfer crew <select id="transferCrew"></select></label><label>To store <select id="transferStore"></select></label><label>Effective date <input id="transferDate" type="date" required></label><button>Transfer crew</button></form><p id="rosterStatus" role="status"></p></details><p class="hint no-print">Enter attendance in Days worked. Apply the completed week from Attendance to populate Days Worked. Review holiday selections. Enter the number of days the crew member was at least 1 minute late. Each late day uses one hourly OT rate. Savings defaults to PHP 100 when days worked exceed 1.</p><details class="roster no-print"><summary><strong>Holidays for this store and week</strong></summary><form id="holidayForm"><label>Holiday date <input id="holidayDate" type="date" required></label><label>Holiday type <select id="holidayType"><option value="100">Regular (+100%)</option><option value="30">Special (+30%)</option></select></label><button>Add holiday</button></form><div id="holidayList"></div><p id="holidayStatus" role="status"></p></details><div class="table"><table><thead id="weeklyHead"></thead><tbody id="weeklyRows"></tbody><tfoot id="weeklyTotal"></tfoot></table></div><div class="signoff"><div class="signatory"><input id="preparedName" maxlength="80" aria-label="Prepared by"><strong id="preparedPrint"></strong><label for="preparedName">Prepared by / Date</label></div><div class="signatory"><input id="reviewedName" maxlength="80" aria-label="Reviewed by"><strong id="reviewedPrint"></strong><label for="reviewedName">Reviewed by / Date</label></div><div class="signatory"><input id="approvedName" maxlength="80" aria-label="Approved by"><strong id="approvedPrint"></strong><label for="approvedName">Approved by / Date</label></div></div></section><section class="panel" id="savings" hidden><div class="title"><h2 id="savingsTitle"></h2><div class="actions"><button id="openSavingsStatement">Individual statement</button><button id="withdrawablePDF" class="primary">Download balances PDF</button><button id="withdrawableJPG">Download balances JPG</button></div></div><p class="hint">Savings deposits from this store’s workbook and weekly payroll. A dash means no payroll entry. Cycle-to-date store totals include earlier deductions for former crew. Select a month when they were assigned here to see their individual entries.</p><div class="cards" id="savingsCards"></div><div class="table"><table><thead id="savingsHead"></thead><tbody id="savingsRows"></tbody><tfoot id="savingsTotal"></tfoot></table></div><section hidden><table><tbody id="importedSavingsRows"></tbody><tfoot id="importedSavingsTotal"></tfoot></table></section><section class="account-section"><h2>Savings withdrawals</h2><p class="hint">Balances include payroll savings recorded for this business across linked store assignments. Active crew must leave at least ₱1,500. Resigned crew can withdraw the full recorded balance. Record their final payroll first to include its savings deduction.</p><form id="withdrawalForm" class="actions"><label>Crew member <select id="withdrawalCrew" required></select></label><label>Withdrawal date <input id="withdrawalDate" type="date" required></label><label>Amount (PHP) <input id="withdrawalAmount" type="number" min=".01" step=".01" required></label><button class="primary">Record withdrawal</button></form><p class="hint" id="withdrawalStatus" role="status"></p><p class="hint">Branch downloads use the withdrawal date above. Leave today’s date for current balances.</p><p class="hint" id="withdrawableReportStatus" role="status"></p><div class="actions" style="margin:12px 0"><label for="withdrawalFilter">Filter withdrawal history by crew</label><select id="withdrawalFilter"><option value="">All crew</option></select></div><div class="table"><table><thead><tr><th scope="col">Crew member</th><th scope="col">Withdrawal date</th><th scope="col">Amount (PHP)</th></tr></thead><tbody id="withdrawalRows"></tbody><tfoot><tr style="background:#fff1c9"><th scope="row" colspan="2" style="text-align:left">Total amount withdrawn</th><td id="withdrawalFilteredTotal" aria-live="polite"></td></tr></tfoot></table></div></section></section><section class="panel" id="attendance"><div class="title"><h2 id="attendanceTitle"></h2><div class="actions"><label for="attendanceWeek">Payroll week</label><select id="attendanceWeek"></select><button id="manageAttendanceCrew">Manage payroll crew</button><button id="saveAttendanceDefaults" class="primary">Save default Worked days</button><button id="applyAttendance">Apply attendance to payroll</button></div></div><p class="hint">The daily grid follows the selected payroll crew for this store and week. Keep crew selected when you need to record leave or an absence. New dates start as Worked (unsaved). Record exceptions before saving the remaining Worked days.</p><div class="table"><table><thead id="attendanceHead"></thead><tbody id="attendanceRows"></tbody></table></div><p id="attendanceStatus" class="hint" role="status"></p><section class="attendance-summary"><div class="title"><h2>Weekly attendance totals</h2><label><input id="showFormerAttendance" type="checkbox"> Show former crew in weekly and monthly totals</label></div><div class="table"><table><thead id="attendanceWeekHead"></thead><tbody id="attendanceWeekRows"></tbody></table></div></section><h2>Monthly attendance totals</h2><div class="table"><table><thead id="attendanceMonthHead"></thead><tbody id="attendanceMonthRows"></tbody></table></div><section class="attendance-year"><h2 id="attendanceYearTitle">Yearly attendance totals</h2><p class="hint" id="attendanceYearNote"></p><div class="table"><table><thead id="attendanceYearHead"></thead><tbody id="attendanceYearRows"></tbody></table></div></section></section></main>
+<dialog id="report"><form method="dialog"><button>Close preview</button></form><img id="reportImage" alt="Store management report"></dialog>
+<dialog id="crewStatement"><form method="dialog"><button>Close</button></form><h2 id="crewStatementTitle"></h2><div class="actions"><label>Crew member <select id="statementCrew"></select></label><button id="statementPDF" class="primary">Download PDF</button><button id="statementJPG">Download JPG</button></div><p class="hint" id="statementStatus" role="status"></p></dialog>
+<script src="/local-storage.js"></script>
+<script src="/configuration.js"></script>
+<script>
+"use strict";
+const configuration=window.customerConfiguration;
+const seed=configuration.stores.map(store=>({store,rows:[]}));
+function canonicalCrewId(id){return id;}
+function canonicalCrewName(id,name){return name;}
+const importedSavings=[];
+const legacyKey="crispy-king-payroll-2026-11-v1";
+const key="crispy-king-payroll-periods-v2";
+const el=id=>document.getElementById(id);
+const monthNames=Array.from({length:12},(_,i)=>new Intl.DateTimeFormat("en",{month:"long",timeZone:"UTC"}).format(new Date(Date.UTC(2026,i,15))));
+const validPeriod=p=>/^20[0-9]{2}-(0[1-9]|1[0-2])$/.test(p)&&p>=configuration.startMonth;
+function calendar(p){
+  const [year,month]=p.split("-").map(Number);
+  const ranges=[];
+  for(let day=1;day<=new Date(Date.UTC(year,month,0)).getUTCDate();day++){
+    const thursday=new Date(Date.UTC(year,month-1,day));
+    if(thursday.getUTCDay()!==4)continue;
+    const friday=new Date(Date.UTC(year,month-1,day-6));
+    const prefix=(friday.getUTCMonth()+1)+"."+friday.getUTCDate();
+    ranges.push({start:friday,end:thursday,label:prefix+"-"+(friday.getUTCMonth()===month-1?"":month+".")+day});
+  }
+  return ranges;
+}
+function periodTitle(p){
+  const [year,month]=p.split("-").map(Number);
+  return monthNames[month-1]+" "+year;
+}
+function coverage(p){
+  const ranges=calendar(p), first=ranges[0].start, last=ranges.at(-1).end;
+  const print=d=>monthNames[d.getUTCMonth()]+" "+d.getUTCDate();
+  if(first.getUTCFullYear()!==last.getUTCFullYear())return print(first)+", "+first.getUTCFullYear()+"–"+print(last)+", "+last.getUTCFullYear();
+  if(first.getUTCMonth()===last.getUTCMonth())return print(first)+"–"+last.getUTCDate()+", "+last.getUTCFullYear();
+  return print(first)+"–"+print(last)+", "+last.getUTCFullYear();
+}
+function recordingCycle(p){
+  const [year,month]=p.split("-").map(Number), start=month===12?year:year-1;
+  return {start:start+"-12",end:(start+1)+"-11",label:"December "+start+" – November "+(start+1)};
+}
+let current=0, period=configuration.startMonth, periods={}, payroll={}, storageOK=true, activeView="attendance", weekIndex=0;
+const originalRoster=seed.map(s=>s.rows.map(r=>({...r})));
+let picked={}, holidays={}, attendance={}, withdrawals=[], payReleases=[];
+const requiredSavings=150000;
+const dailyStatuses={
+  present:"Worked",half:"Half day worked",absent:"Absent",excused:"Absent with permission",
+  leave:"Leave with permission",leaveUnapproved:"Leave without permission",rest:"Rest / off day"
+};
+const attendanceColumns=[
+  ["worked","Days attended"],["absent","Absences"],["excused","Absences with permission"],
+  ["leave","Leave with permission"],["leaveUnapproved","Leave without permission"],
+  ["rest","Rest / off days"],["lateCount","Late arrivals"],["lateMinutes","Total late minutes"]
+];
+
+const defaultSignOff={...configuration.signOff};
+let signOff={...defaultSignOff};
+function cleanSignOff(raw){
+  return Object.fromEntries(Object.entries(defaultSignOff).map(([role,fallback])=>[role,typeof raw?.[role]==="string"?raw[role].slice(0,80):fallback]));
+}
+function blank(p){
+  const ranges=calendar(p);
+  return seed.map(store=>store.rows.map(crew=>ranges.map(()=>({days:null,rate:crew.rate}))));
+}
+function validated(candidate,p){
+  if(!Array.isArray(candidate)||candidate.length!==seed.length) throw Error("Backup does not match the four stores.");
+  const length=calendar(p).length;
+  return candidate.map((store,i)=>{
+    if(!Array.isArray(store)||store.length>seed[i].rows.length||store.length<originalRoster[i].length) throw Error("Backup crew counts do not match.");
+    return seed[i].rows.map((person,j)=>{
+      const crew=store[j]??calendar(p).map(()=>({days:null,rate:person.rate}));
+      if(!Array.isArray(crew)||crew.length!==length) throw Error("Backup does not match the payroll calendar.");
+      return crew.map(v=>{
+        if(!v||!(v.days===null||Number.isFinite(v.days)&&v.days>=0&&v.days<=7)||!(v.rate===null||Number.isFinite(v.rate)&&v.rate>0&&v.rate<=999999)) throw Error("Backup contains an invalid day count or rate.");
+        return {days:v.days,rate:v.rate};
+      });
+    });
+  });
+}
+function validatePeriods(value){
+  if(!value||typeof value!=="object"||Array.isArray(value))throw Error("Invalid backup.");
+  const result={};
+  for(const [p,entry] of Object.entries(value)){
+    if(!validPeriod(p))throw Error("Backup contains an invalid payroll month.");
+    result[p]=validated(entry,p);
+  }
+  return result;
+}
+const deductions=[
+  ["sss","SSS prem."],["phic","PHIC"],["hdmf","HDMF"],["sssLoan","SSS loan"],
+  ["hdmfLoan","HDMF loan"],["uniform","Uniforms"],["advance","Cash adv."],
+  ["late","Lates & undertime"],["savings","Savings"],["shortages","Other / shortages"],
+  ["orientation","Orientation absences"]
+];
+const optional=[["lateDays","Late days"],["ot","OT hours"],["holiday","Holiday pay"],["night","Night prem."],...deductions];
+function validatePayroll(raw){
+  if(raw===undefined)return {};
+  if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("Invalid weekly payroll backup.");
+  const clean={};
+  for(const [p,records] of Object.entries(raw)){
+    if(!validPeriod(p)||!records||typeof records!=="object"||Array.isArray(records))throw Error("Invalid weekly payroll month.");
+    clean[p]={};
+    for(const [position,fields] of Object.entries(records)){
+      const [store,crew,week]=position.split(":").map(Number);
+      if(!/^\d+:\d+:\d+$/.test(position)||!seed[store]?.rows[crew]||!calendar(p)[week]||!fields||typeof fields!=="object"||Array.isArray(fields))throw Error("Invalid weekly payroll record.");
+      clean[p][position]={};
+      for(const [k,v] of Object.entries(fields)){
+        if(k==="advance2")continue;
+        if(k==="lateDays"&&(!Number.isInteger(v)||v<0||v>7))throw Error("Invalid late day count.");
+        if(!optional.some(([name])=>name===k)&&!/^holiday-\d{4}-\d{2}-\d{2}$/.test(k)||!Number.isFinite(v)||v<0||v>999999)throw Error("Invalid weekly payroll amount.");
+        clean[p][position][k]=v;
+      }
+    }
+  }
+  return clean;
+}
+function dateISO(date){return date.toISOString().slice(0,10);}
+function isDate(v){
+  if(typeof v!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(v))return false;
+  const date=new Date(v+"T00:00:00Z");
+  return Number.isFinite(date.valueOf())&&dateISO(date)===v;
+}
+function cleanRoster(raw){
+  if(!Array.isArray(raw)||raw.length!==seed.length)throw Error("Backup crew list is invalid.");
+  return raw.map((list,i)=>{
+    if(!Array.isArray(list)||list.length<originalRoster[i].length)throw Error("Backup crew list is incomplete.");
+    return list.map((r,j)=>{
+      if(!r||typeof r.name!=="string"||!r.name.trim()||r.name.length>70||!Number.isFinite(r.rate)||r.rate<=0||r.rate>999999||
+        (r.start!=null&&!isDate(r.start))||(r.end!=null&&!isDate(r.end))||(r.start&&r.end&&r.start>r.end))throw Error("Invalid crew record.");
+      const id=canonicalCrewId(typeof r.person==="string"?r.person:i+":"+j);
+      if(j<originalRoster[i].length&&id!==canonicalCrewId(i+":"+j))throw Error("The original crew order differs.");
+      if(j>=originalRoster[i].length&&!r.start)throw Error("New crew require a start date.");
+      return {name:canonicalCrewName(id,r.name),rate:r.rate,prior:originalRoster[i][j]?.prior??0,start:r.start??null,end:r.end??null,person:id,transferred:r.transferred===true};
+    });
+  });
+}
+function useRoster(roster){roster.forEach((rows,i)=>{seed[i].rows=rows;});}
+function cleanPicked(raw){
+  const clean={};
+  if(raw===undefined)return clean;
+  if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("Invalid payroll selections.");
+  for(const [key,value] of Object.entries(raw)){
+    const [p,a,b,c]=key.split(":");
+    if(!/^20\d\d-\d\d:\d+:\d+:\d+$/.test(key)||!validPeriod(p)||!seed[Number(a)]?.rows[Number(b)]||!calendar(p)[Number(c)]||typeof value!=="boolean")throw Error("Invalid payroll selection.");
+    clean[key]=value;
+  }
+  return clean;
+}
+try{
+  const saved=payrollStorage.getItem(key), legacy=payrollStorage.getItem(legacyKey);
+  if(saved){const data=JSON.parse(saved);if(data.roster)useRoster(cleanRoster(data.roster));periods=validatePeriods(data.periods);payroll=validatePayroll(data.payroll);picked=cleanPicked(data.picked);holidays=cleanHolidays(data.holidays);signOff=cleanSignOff(data.signOff);attendance=cleanAttendance(data.attendance);withdrawals=cleanWithdrawals(data.withdrawals);payReleases=cleanPayReleases(data.payReleases);if(validPeriod(data.period))period=data.period;}
+  else if(legacy)periods["2026-11"]=validated(JSON.parse(legacy),"2026-11");
+}catch{storageOK=false;}
+function periodData(p){return periods[p]??(periods[p]=blank(p));}
+function weekLabels(){return calendar(period).map(x=>x.label);}
+const peso=new Intl.NumberFormat("en-PH",{minimumFractionDigits:2,maximumFractionDigits:2});
+const amount=x=>x===null?"—":peso.format(x/100);
+const pay=x=>x===null?null:Math.floor((x+6)/12);
+const sum=values=>values.some(x=>x!==null)?values.reduce((a,b)=>a+(b??0),0):null;
+const calculateWeeks=entries=>entries.map(w=>w.days===null||w.rate===null?null:Math.round((w.days*w.rate+1e-9)*100));
+function eligible(person,week){
+  return (!person.start||person.start<=dateISO(week.end))&&(!person.end||person.end>=dateISO(week.start));
+}
+function hasPayroll(p,i,j,k){
+  return periodData(p)[i][j][k].days!==null||Object.keys(payroll[p]?.[[i,j,k].join(":")]??{}).length>0;
+}
+function isPicked(p,i,j,k){
+  const selected=picked[[p,i,j,k].join(":")];
+  if(selected===false)return false;
+  const person=seed[i].rows[j], week=calendar(p)[k];
+  const inStore=eligible(person,week);
+  if(!inStore)return false;
+  if(hasPayroll(p,i,j,k))return true;
+  return inStore&&(selected??!person.start);
+}
+function assignedInPayrollMonth(person,p){
+  return calendar(p).some(week=>eligible(person,week));
+}
+function compute(i,p=period,visibleOnly=false){
+  const data=periodData(p), year=p.slice(0,4);
+  const earlier=Object.keys(periods).filter(q=>q.slice(0,4)===year&&q<=p);
+  const ranges=calendar(p);
+  const rows=seed[i].rows.map((r,j)=>{
+    const entries=data[i][j];
+    const earnings=calculateWeeks(entries).map((v,k)=>isPicked(p,i,j,k)?v:null);
+    const person=r.person??i+":"+j;
+    let annual=0;
+    for(const [a,store] of seed.entries())for(const [b,record] of store.rows.entries()){
+      if((record.person??a+":"+b)!==person)continue;
+      if(year==="2026")annual+=record.prior;
+      for(const q of earlier)calculateWeeks(periods[q][a][b]).forEach((v,k)=>{if(v!==null&&isPicked(q,a,b,k))annual+=v;});
+    }
+    const november=sum(earnings);
+    return {...r,index:j,expected:ranges.filter((_,k)=>isPicked(p,i,j,k)).length,entries,earnings,november,expense:pay(november),estimated:pay(annual)};
+  }).filter(r=>!visibleOnly||assignedInPayrollMonth(r,p));
+  return {rows,expected:rows.reduce((n,r)=>n+r.expected,0),earned:sum(rows.map(r=>r.november)),expense:sum(rows.map(r=>r.expense)),
+    entered:rows.reduce((n,r)=>n+r.earnings.filter(v=>v!==null).length,0),
+    weekly:calendar(p).map((_,j)=>sum(rows.map(r=>r.earnings[j])))};
+}
+function save(){try{payrollStorage.setItem(key,JSON.stringify({configuration,period,periods,payroll,roster:seed.map(s=>s.rows),picked,holidays,signOff,attendance,withdrawals,payReleases}));storageOK=true;}catch{storageOK=false;}}
+function update(){
+  const result=compute(current,period,true);
+  result.rows.forEach(r=>{
+    const i=r.index;
+    r.earnings.forEach((v,j)=>el("week-"+i+"-"+j).textContent=amount(v));
+    el("nov-"+i).textContent=amount(r.november);
+    el("est-"+i).textContent=amount(r.estimated);
+  });
+  el("cards").innerHTML=[
+    ["Crew records",result.rows.length],["Crew weeks entered",result.entered+" / "+result.expected],
+    ["Monthly earnings",amount(result.earned)],["Monthly 13th month expense",amount(result.expense)]
+  ].map(([l,v])=>"<div class='card'><small>"+l+"</small><strong>"+v+"</strong></div>").join("");
+  el("status").textContent=storageOK?"Entries are saved in the local SQLite database. Back up entries before moving to another computer.":"Database saving is unavailable. Keep this window open and use Back up entries.";
+}
+function render(){
+  const store=seed[current], weeks=weekLabels(), entries=periodData(period);
+  el("period").value=period;
+  el("recordingCycle").textContent=period==="2026-11"?"Earlier records · November 2026":"Recording cycle · "+recordingCycle(period).label;
+  el("branch").textContent=store.store+" · "+periodTitle(period);
+  el("stores").replaceChildren(...seed.map((s,i)=>{
+    const b=document.createElement("button");b.textContent=s.store;b.setAttribute("aria-pressed",i===current);
+    b.hidden=!s.store.toLowerCase().includes(el("storeSearch").value.toLowerCase());
+    b.onclick=()=>{current=i;render();};return b;
+  }));
+  el("head").innerHTML="<tr><th rowspan='2'>Crew member</th>"+weeks.map(w=>"<th colspan='3'>"+w+"</th>").join("")+"<th rowspan='2'>Month earnings</th><th rowspan='2'>13th month on record</th></tr><tr>"+weeks.map(()=>"<th>Days</th><th>Rate</th><th>Earned</th>").join("")+"</tr>";
+  el("rows").replaceChildren(...store.rows.map((r,i)=>({r,i})).filter(({r})=>assignedInPayrollMonth(r,period)).map(({r,i})=>{
+    const tr=document.createElement("tr");
+    tr.insertCell().textContent=r.name;
+    entries[current][i].forEach((w,j)=>{
+      const days=tr.insertCell();
+      days.className="attendance-derived";
+      days.textContent=w.days??"—";
+      days.title="Update days in Attendance and apply the completed payroll week";
+      const input=document.createElement("input");
+      input.type="number";input.min=0.01;input.max=999999;input.step="any";input.value=w.rate??"";
+      input.setAttribute("aria-label",r.name+", "+weeks[j]+", basic daily rate");
+      input.disabled=!eligible(r,calendar(period)[j])&&!hasPayroll(period,current,i,j);
+      input.addEventListener("input",()=>{
+        if(!input.validity.valid){el("status").textContent="Correct the highlighted input. The last valid value is retained.";return;}
+        w.rate=input.value===""?null:input.valueAsNumber;save();update();refreshPayReleaseLimit();
+      });
+      input.addEventListener("blur",()=>{if(!input.validity.valid){input.value=w.rate??"";update();}});
+      tr.insertCell().append(input);
+      tr.insertCell().id="week-"+i+"-"+j;
+    });
+    tr.insertCell().id="nov-"+i;tr.insertCell().id="est-"+i;
+    return tr;
+  }));update();
+  if(activeView==="weekly")renderWeekly();
+  if(activeView==="savings")renderSavings();
+  if(activeView==="monthly")renderPayReleases();
+  if(activeView==="attendance")renderAttendance();
+}
+function detail(crew){
+  const records=payroll[period]??(payroll[period]={});
+  const id=[current,crew,weekIndex].join(":");
+  return records[id]??(records[id]={});
+}
+const cents=n=>Math.round((n+1e-9)*100);
+function savingsDeduction(entry,extras){return cents(extras.savings??(entry.days>1?100:0));}
+function regularPay(entry,extras,events=[],previousSSS=0){
+  const basic=calculateWeeks([entry])[0];
+  const otRate=entry.rate===null?null:entry.rate/8;
+  const ot=otRate===null?null:cents((extras.ot??0)*otRate);
+  const holiday=cents(extras.holiday??0)+(entry.days>0?events.reduce((n,h)=>n+cents((extras["holiday-"+h.date]??(h.auto?1:0))*(entry.rate??0)*h.percent/100),0):0);
+  const savings=savingsDeduction(entry,extras), sss=extras.sss??previousSSS;
+  const late=extras.lateDays===undefined?cents(extras.late??0):cents(extras.lateDays*(otRate??0));
+  const gross=basic===null?null:basic+(ot??0)+holiday+cents(extras.night??0);
+  const deduction=deductions.reduce((total,[name])=>total+(name==="savings"?savings:name==="late"?late:cents(name==="sss"?sss:extras[name]??0)),0);
+  return {basic,otRate:otRate===null?null:cents(otRate),ot,holiday,gross,deduction,savings,late,sss:cents(sss),net:gross===null?null:gross-deduction};
+}
+function showMode(mode){
+  activeView=mode;
+  for(const [view,panel] of [["weekly","regular"],["monthly","monthly"],["savings","savings"],["attendance","attendance"]]){
+    el(panel).hidden=view!==mode;
+    el(view+"Mode").setAttribute("aria-pressed",String(view===mode));
+  }
+  render();
+}
+function savingsLedger(store,p=period){
+  const roster=seed[store].rows;
+  const {start}=recordingCycle(p);
+  const months=Object.keys(periods).filter(q=>q>=start&&q<=p);
+  const people=new Map();
+  const length=calendar(p).length;
+  for(const [index,person] of roster.entries()){
+    const id=person.person??store+":"+index;
+    const record=people.get(id)??{name:person.name,weeks:Array(length).fill(null),year:0,recorded:false,assigned:false};
+    record.assigned ||= assignedInPayrollMonth(person,p);
+    if(calendar(p).some((_,week)=>isPicked(p,store,index,week)))record.recorded=true;
+    for(const month of months)for(const [week,entry] of periods[month][store][index].entries()){
+      if(entry.days===null||entry.rate===null||!isPicked(month,store,index,week)||hasImportedSavingsWeek(id,store,calendar(month)[week]))continue;
+      const extras=payroll[month]?.[[store,index,week].join(":")]??{};
+      const deduction=savingsDeduction(entry,extras);
+      record.year+=deduction;
+      record.recorded=true;
+      if(month===p)record.weeks[week]=(record.weeks[week]??0)+deduction;
+    }
+    people.set(id,record);
+  }
+  const weekEnds=calendar(p).map(week=>dateISO(week.end));
+  for(const source of importedSavings){
+    if(source.store!==store||!source.person||!people.has(source.person))continue;
+    const record=people.get(source.person);
+    for(const [date,credit] of source.deposits){
+      const end=new Date(date+"T00:00:00Z");
+      if(end.getUTCDay()===6)end.setUTCDate(end.getUTCDate()-2);
+      const endDate=dateISO(end), month=endDate.slice(0,7);
+      if(month<start||month>p)continue;
+      record.year+=credit;
+      record.recorded=true;
+      const i=weekEnds.indexOf(endDate);
+      if(i>=0)record.weeks[i]=(record.weeks[i]??0)+credit;
+    }
+  }
+  const rows=[...people.values()].filter(r=>r.recorded).map(r=>({...r,month:sum(r.weeks)}));
+  return {rows,weekTotals:Array.from({length},(_,j)=>sum(rows.map(r=>r.weeks[j]))),
+    month:sum(rows.map(r=>r.month)),year:rows.reduce((n,r)=>n+r.year,0)};
+}
+function renderSavings(){
+  const result=savingsLedger(current);
+  el("savingsTitle").textContent=seed[current].store+" · Savings · "+periodTitle(period);
+  el("savingsCards").innerHTML=[["Monthly deductions",result.month],["Cycle-to-date deductions",result.year]]
+    .map(([title,value])=>"<div class='card'><small>"+title+"</small><strong>"+amount(value)+"</strong></div>").join("");
+  function cells(tag,values){
+    const tr=document.createElement("tr");
+    for(const value of values){const cell=document.createElement(tag);cell.textContent=value;tr.append(cell);}
+    return tr;
+  }
+  el("savingsHead").replaceChildren(cells("th",["Crew member",...weekLabels(),"Month total","Cycle to date"]));
+  el("savingsRows").replaceChildren(...result.rows.filter(r=>r.assigned).map(r=>cells("td",[r.name,...r.weeks.map(amount),amount(r.month),amount(r.year)])));
+  el("savingsTotal").replaceChildren(cells("th",["STORE TOTAL",...result.weekTotals.map(amount),amount(result.month),amount(result.year)]));
+  renderImportedSavings();
+  renderWithdrawals();
+}
+function renderWeekly(){
+  const roster=seed[current].rows, ranges=calendar(period), data=periodData(period);
+  weekIndex=Math.min(weekIndex,ranges.length-1);
+  const names=roster.map((person,index)=>({...person,index})).filter(person=>isPicked(period,current,person.index,weekIndex));
+  renderPicker(roster,ranges[weekIndex]);
+  const events=weekHolidays();
+  renderHolidayList(events,ranges[weekIndex]);
+  syncSignOff();
+  el("weeklyTitle").textContent=seed[current].store;
+  const dateLabel=new Intl.DateTimeFormat("en-PH",{month:"short",day:"numeric",timeZone:"UTC"});
+  const week=ranges[weekIndex];
+  el("weeklyPeriod").textContent="Period covered  |  "+dateLabel.format(week.start)+" – "+dateLabel.format(week.end)+", "+week.end.getUTCFullYear();
+  el("payWeek").replaceChildren(...ranges.map((week,i)=>{
+    const o=document.createElement("option");o.value=i;o.textContent=week.label;return o;
+  }));
+  el("payWeek").value=weekIndex;
+  el("weeklyHead").innerHTML=
+    "<tr><th rowspan='2'>Name of employee</th><th colspan='3'>Attendance and rate</th><th colspan='6'>Earnings</th><th colspan='11'>Deductions</th><th rowspan='2'>Total deduction</th><th rowspan='2'>Net pay</th><th rowspan='2'>Employee signature</th></tr>"+
+    "<tr>"+["Days worked","OT hours","Basic rate","Basic pay","OT rate / hr","Overtime pay","Holiday pay","Night prem.","Gross pay",...deductions.map(x=>x[1])].map(t=>"<th>"+t+"</th>").join("")+"</tr>";
+  const calculated=[];
+  el("weeklyRows").replaceChildren(...names.map((person,i)=>{
+    const entry=data[current][person.index][weekIndex], extras=detail(person.index);
+    const tr=document.createElement("tr");
+    const previousSSS=lastSSS(person.index);
+    const crewHolidays=events.filter(h=>(!person.start||h.date>=person.start)&&(!person.end||h.date<=person.end));
+    tr.insertCell().textContent=person.name;
+    const linked={}, printable={};
+    function numberCell(obj,field,label,max,min=0,fallback){
+      const input=document.createElement("input");
+      input.type="number";input.min=min;input.max=max;input.step=field==="lateDays"?"1":"any";input.value=obj[field]??"";
+      input.setAttribute("aria-label",person.name+", "+label);
+      if(fallback)input.placeholder=fallback();
+      input.oninput=()=>{
+        if(!input.validity.valid)return;
+        if(input.value===""&&obj===extras)delete obj[field];
+        else obj[field]=input.value===""?null:input.valueAsNumber;
+        save();refresh();
+      };
+      input.onblur=()=>{if(!input.validity.valid)input.value=obj[field]??"";};
+      const cell=tr.insertCell(), display=document.createElement("span");
+      display.className="payroll-print-value";printable[field]=display;
+      cell.append(input,display);
+      return input;
+    }
+    function output(field){linked[field]=tr.insertCell();}
+    let savingsInput;
+    function refresh(){
+      const values=regularPay(entry,extras,crewHolidays,previousSSS);
+      if(savingsInput)savingsInput.placeholder=entry.days>1?"100.00":"";
+      if(linked.late)linked.late.textContent=amount(values.late);
+      for(const [field,display] of Object.entries(printable)){
+        if(field==="days")display.textContent=entry.days??"—";
+        else if(field==="rate")display.textContent=amount(entry.rate===null?null:cents(entry.rate));
+        else if(field==="ot")display.textContent=extras.ot??0;
+        else if(field==="lateDays")display.textContent=amount(values.late);
+        else display.textContent=amount(field==="sss"||field==="savings"?values[field]:cents(extras[field]??0));
+      }
+      for(const [field,cell] of Object.entries(linked))cell.textContent=amount(values[field]);
+      calculated[i]=values;
+      if(calculated.filter(Boolean).length===names.length)refreshTotals();
+    }
+    const days=tr.insertCell();
+    days.className="attendance-derived";
+    days.textContent=entry.days??"—";
+    days.title="Update days in Attendance and apply the completed payroll week";
+    numberCell(extras,"ot","Overtime hours",168);
+    numberCell(entry,"rate","Basic daily rate",999999,.01);
+    output("basic");output("otRate");output("ot");
+    const holidayCell=tr.insertCell();
+    linked.holiday=holidayCell.appendChild(document.createElement("strong"));
+    for(const h of crewHolidays){
+      const label=document.createElement("label"), input=document.createElement("input");
+      input.type="checkbox";input.checked=Boolean(extras["holiday-"+h.date]??h.auto);
+      input.onchange=()=>{extras["holiday-"+h.date]=input.checked?1:0;save();refresh();};
+      label.className="holiday-pick";label.style.display="block";label.append(input,h.date.slice(5));holidayCell.append(label);
+    }
+    numberCell(extras,"night","Night premium",999999);
+    output("gross");
+    deductions.forEach(([field,label])=>{
+      if(field==="late"){
+        const input=numberCell(extras,"lateDays","Late days",7);
+        input.placeholder="Days";
+        linked.late=document.createElement("small");linked.late.className="late-charge";input.parentNode.append(linked.late);
+        return;
+      }
+      const input=numberCell(extras,field,label,999999,0,field==="sss"?()=>previousSSS?amount(cents(previousSSS)):"":undefined);
+      if(field==="savings")savingsInput=input;
+    });
+    output("deduction");output("net");tr.insertCell();
+    refresh();
+    return tr;
+  }));
+  refreshTotals();
+  function refreshTotals(){
+    const cells=["TOTAL AMOUNT",names.reduce((a,r)=>a+(data[current][r.index][weekIndex].days??0),0),
+      names.reduce((a,r)=>a+(detail(r.index).ot??0),0),"",
+      amount(sum(calculated.map(r=>r.basic))),"",amount(sum(calculated.map(r=>r.ot))),
+      amount(sum(calculated.map(r=>r.holiday))),amount(names.reduce((a,r)=>a+cents(detail(r.index).night??0),0)),
+      amount(sum(calculated.map(r=>r.gross))),
+      ...deductions.map(([field])=>amount(field==="sss"||field==="savings"||field==="late"?sum(calculated.map(r=>r[field])):names.reduce((a,r)=>a+cents(detail(r.index)[field]??0),0))),
+      amount(sum(calculated.map(r=>r.deduction))),amount(sum(calculated.map(r=>r.net))),""];
+    const tr=document.createElement("tr");
+    cells.forEach(v=>tr.insertCell().textContent=v);
+    el("weeklyTotal").replaceChildren(tr);
+    el("weeklyStats").innerHTML=[["Crew on payroll",names.length],["Gross pay",amount(sum(calculated.map(r=>r.gross)))],["Deductions",amount(sum(calculated.map(r=>r.deduction)))],["Net pay",amount(sum(calculated.map(r=>r.net)))]]
+      .map(([label,value])=>"<div><small>"+label+"</small><strong>"+value+"</strong></div>").join("");
+  }
+}
+function renderPicker(roster,week){
+  el("picker").replaceChildren(...roster.map((r,j)=>{
+    const label=document.createElement("label");label.className="crew-option";
+    const input=document.createElement("input");input.type="checkbox";
+    input.checked=isPicked(period,current,j,weekIndex);
+    input.disabled=!eligible(r,week);
+    input.title="Deselection excludes this crew member from totals and retains entered values.";
+    input.onchange=()=>{picked[[period,current,j,weekIndex].join(":")]=input.checked;save();renderWeekly();};
+    const text=document.createTextNode(r.name+(r.end?" · Last day "+r.end:""));
+    label.append(input,text);return label;
+  }));
+  const previous=el("leaveCrew").value;
+  el("leaveCrew").replaceChildren(...roster.map((r,j)=>{
+    const option=document.createElement("option");option.value=j;option.textContent=r.name;return option;
+  }));
+  if(previous!==""&&roster[Number(previous)])el("leaveCrew").value=previous;
+  renderTransfer(roster,week);
+  const renameIndex=Number(el("renameCrew").value)||0;
+  el("renameCrew").replaceChildren(...roster.map((r,i)=>{const option=document.createElement("option");option.value=i;option.textContent=r.name;return option;}));
+  el("renameCrew").value=String(roster[renameIndex]?renameIndex:0);
+  el("renameName").value=roster[Number(el("renameCrew").value)]?.name??"";
+  el("hireDate").value=dateISO(week.start);
+  el("leaveDate").value=roster[Number(el("leaveCrew").value)]?.end??dateISO(week.end);
+}
+el("hireForm").onsubmit=e=>{
+  e.preventDefault();
+  const roster=seed[current].rows, name=el("hireName").value.trim().replace(/\s+/g," ").toUpperCase();
+  const rate=el("hireRate").valueAsNumber, start=el("hireDate").value;
+  if(!name||!isDate(start)||!Number.isFinite(rate)||rate<=0||rate>999999)return;
+  if(roster.some(r=>r.name.toUpperCase()===name)){
+    el("rosterStatus").textContent="A crew member with that name already exists in this store.";return;
+  }
+  const j=roster.length;
+  roster.push({name,rate,prior:0,start,end:null});
+  for(const [p,records] of Object.entries(periods))records[current].push(calendar(p).map(()=>({days:null,rate})));
+  const week=calendar(period)[weekIndex];
+  const selected=eligible(roster[j],week);
+  if(selected)picked[[period,current,j,weekIndex].join(":")]=true;
+  save();renderWeekly();
+  el("hireName").value="";el("hireRate").value="";
+  el("rosterStatus").textContent=selected?name+" added and selected for this week.":name+" added. Select a week on or after the start date.";
+};
+el("renameCrew").onchange=()=>{el("renameName").value=seed[current].rows[Number(el("renameCrew").value)].name;};
+el("renameForm").onsubmit=e=>{
+  e.preventDefault();
+  const index=Number(el("renameCrew").value), crew=seed[current].rows[index];
+  const name=el("renameName").value.trim().replace(/\s+/g," ").toUpperCase();
+  if(!name||!crew)return;
+  const identity=crew.person??current+":"+index;
+  if(seed[current].rows.some((r,i)=>(r.person??current+":"+i)!==identity&&r.name.toUpperCase()===name)){el("rosterStatus").textContent="A different crew member already uses this name.";return;}
+  seed.forEach((store,a)=>store.rows.forEach((r,b)=>{if((r.person??a+":"+b)===identity)r.name=name;}));
+  save();render();el("rosterStatus").textContent="Crew name updated, including linked store assignments.";
+};
+el("leaveCrew").onchange=()=>{const r=seed[current].rows[Number(el("leaveCrew").value)];el("leaveDate").value=r.end??dateISO(calendar(period)[weekIndex].end);};
+el("leaveForm").onsubmit=e=>{
+  e.preventDefault();
+  const r=seed[current].rows[Number(el("leaveCrew").value)], end=el("leaveDate").value;
+  if(r.transferred){el("rosterStatus").textContent="This assignment ended by transfer.";return;} if(!isDate(end)||(r.start&&end<r.start)){el("rosterStatus").textContent="The last working day must be on or after the start date.";return;}
+  r.end=end;save();renderWeekly();el("rosterStatus").textContent="Last working day saved. Recorded payroll is retained.";
+};
+el("clearLeave").onclick=()=>{
+  const r=seed[current].rows[Number(el("leaveCrew").value)]; if(r.transferred){el("rosterStatus").textContent="This assignment ended by transfer.";return;} r.end=null;save();renderWeekly();el("rosterStatus").textContent="Resignation date cleared.";
+};
+function cleanHolidays(raw){
+  if(raw===undefined)return {};
+  if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("Invalid holiday data.");
+  const result={};
+  for(const [key,events] of Object.entries(raw)){
+    const [p,store,week]=key.split(":"), range=validPeriod(p)?calendar(p)[Number(week)]:null;
+    if(!seed[Number(store)]||!range||!Array.isArray(events))throw Error("Invalid holiday week.");
+    const dates=new Set();
+    result[key]=events.map(h=>{
+      if(!isDate(h.date)||h.date<dateISO(range.start)||h.date>dateISO(range.end)||![30,100].includes(h.percent)||dates.has(h.date))throw Error("Invalid holiday.");
+      dates.add(h.date);return {date:h.date,percent:h.percent,auto:h.auto===true};
+    });
+  }
+  return result;
+}
+function holidayKey(){return [period,current,weekIndex].join(":");}
+function weekHolidays(){return holidays[holidayKey()]??[];}
+function renderHolidayList(events,week){
+  el("holidayDate").min=dateISO(week.start);el("holidayDate").max=dateISO(week.end);el("holidayDate").value="";
+  el("holidayList").replaceChildren(...events.map(h=>{
+    const row=document.createElement("div"), button=document.createElement("button");
+    button.type="button";button.textContent="Remove";
+    button.onclick=()=>{
+      holidays[holidayKey()]=events.filter(e=>e.date!==h.date);
+      seed[current].rows.forEach((_,i)=>delete detail(i)["holiday-"+h.date]);
+      save();renderWeekly();
+    };
+    row.append(h.date+" · +"+h.percent+"% ",button);return row;
+  }));
+}
+el("holidayForm").onsubmit=e=>{
+  e.preventDefault();
+  const date=el("holidayDate").value, percent=Number(el("holidayType").value);
+  const week=calendar(period)[weekIndex], events=weekHolidays();
+  if(!isDate(date)||date<dateISO(week.start)||date>dateISO(week.end))return;
+  if(events.some(h=>h.date===date)){el("holidayStatus").textContent="This date is already listed.";return;}
+  holidays[holidayKey()]=[...events,{date,percent,auto:true}].sort((a,b)=>a.date.localeCompare(b.date));save();renderWeekly();
+  el("holidayStatus").textContent="Holiday added and checked for eligible crew. Uncheck anyone to exclude in the Holiday pay column.";
+};
+function lastSSS(index,store=current,p=period,w=weekIndex){
+  const person=seed[store].rows[index].person??store+":"+index;
+  const selected=p+":"+String(w);
+  let latest="", value=0;
+  for(const [p,records] of Object.entries(payroll))for(const [key,extras] of Object.entries(records)){
+    const [a,b,k]=key.split(":").map(Number), record=seed[a]?.rows[b], week=p+":"+k;
+    if(record&&(record.person??a+":"+b)===person&&week<selected&&week>=latest&&extras.sss!==undefined&&picked[[p,a,b,k].join(":")]!==false){
+      latest=week;value=extras.sss;
+    }
+  }
+  return value;
+}
+function renderTransfer(roster,week){
+  function option(value,text){const o=document.createElement("option");o.value=value;o.textContent=text;return o;}
+  el("transferCrew").replaceChildren(...roster.flatMap((r,i)=>eligible(r,week)&&!r.end?[option(i,r.name)]:[]));
+  el("transferStore").replaceChildren(...seed.flatMap((store,i)=>i===current?[]:[option(i,store.store)]));
+  el("transferDate").value=dateISO(week.start);
+}
+el("transferForm").onsubmit=e=>{
+  e.preventDefault();
+  const oldIndex=Number(el("transferCrew").value), target=Number(el("transferStore").value), start=el("transferDate").value;
+  const source=seed[current].rows[oldIndex];
+  if(el("transferCrew").value===""||!source||source.end||target===current||!seed[target]||!isDate(start))return;
+  if(source.start&&start<=source.start){el("rosterStatus").textContent="Transfer date must be after this assignment started.";return;}
+  const prior=new Date(start+"T00:00:00Z");prior.setUTCDate(prior.getUTCDate()-1);
+  const identity=source.person??current+":"+oldIndex;
+  const index=seed[target].rows.length;
+  source.end=dateISO(prior);source.person=identity;source.transferred=true;
+  seed[target].rows.push({name:source.name,rate:source.rate,prior:0,start,end:null,person:identity});
+  for(const [p,records] of Object.entries(periods))records[target].push(calendar(p).map(()=>({days:null,rate:source.rate})));
+  if(eligible(seed[target].rows[index],calendar(period)[weekIndex]))picked[[period,target,index,weekIndex].join(":")]=true;
+  current=target;save();render();el("rosterStatus").textContent="Transfer saved. Earlier entries stay in the originating store.";
+};
+function syncSignOff(){
+  for(const role of Object.keys(defaultSignOff)){
+    el(role+"Name").value=signOff[role];
+    el(role+"Print").textContent=signOff[role];
+  }
+}
+for(const role of Object.keys(defaultSignOff)){
+  el(role+"Name").oninput=()=>{
+    signOff[role]=el(role+"Name").value;
+    el(role+"Print").textContent=signOff[role];
+    save();
+  };
+}
+function resetPayrollWeek(p,store,week){
+  const data=periodData(p)[store];
+  for(const [i,person] of seed[store].rows.entries()){
+    data[i][week]={days:null,rate:person.rate};
+    const position=[store,i,week].join(":");
+    if(payroll[p])delete payroll[p][position];
+    delete picked[p+":"+position];
+  }
+  delete holidays[[p,store,week].join(":")];
+}
+el("resetWeek").onclick=()=>{
+  const week=calendar(period)[weekIndex];
+  if(!confirm("Reset "+seed[current].store+" payroll for "+week.label+" ("+periodTitle(period)+")? This clears days worked, overtime, deductions, holiday dates and crew selections for this week. Daily rates return to roster defaults."))return;
+  resetPayrollWeek(period,current,weekIndex);
+  save();render();
+  el("rosterStatus").textContent="Selected payroll week reset.";
+};
+el("storeSearch").oninput=()=>{
+  const term=el("storeSearch").value.toLowerCase();
+  [...el("stores").children].forEach(button=>button.hidden=!button.textContent.toLowerCase().includes(term));
+};
+el("addStore").onclick=()=>{
+  const entered=prompt("New store name");
+  if(entered===null)return;
+  const name=entered.trim().replace(/\s+/g," ").toUpperCase();
+  if(!name||name.length>70||/[\\/:*?"<>|]/.test(name)){alert("Enter a store name up to 70 characters without filename symbols.");return;}
+  if(seed.length>=(window.customerLicense?.maxStores??100)){alert("Your license store limit has been reached. Contact your supplier to add more stores.");return;}
+  if(seed.some(s=>s.store.toUpperCase()===name)){alert("That store already exists.");return;}
+  seed.push({store:name,rows:[]});configuration.stores.push(name);originalRoster.push([]);
+  for(const records of Object.values(periods))records.push([]);
+  save();current=seed.length-1;el("storeSearch").value="";render();
+};
+el("weeklyMode").onclick=()=>showMode("weekly");
+el("monthlyMode").onclick=()=>showMode("monthly");
+el("savingsMode").onclick=()=>showMode("savings");
+el("attendanceMode").onclick=()=>showMode("attendance");
+el("payWeek").onchange=()=>{weekIndex=Number(el("payWeek").value);renderWeekly();};
+el("printPayroll").onclick=()=>{
+  document.body.classList.add("print-payroll");
+  try{window.print();}finally{document.body.classList.remove("print-payroll");}
+};
+function dailyKey(p,store,crew,w,d){return [p,store,crew,w,d].join(":");}
+function dailyDate(week,d){const date=new Date(week.start);date.setUTCDate(date.getUTCDate()+d);return dateISO(date);}
+function validAssignment(person,date){return (!person.start||date>=person.start)&&(!person.end||date<=person.end);}
+function cleanAttendance(raw){
+  if(raw===undefined)return {};
+  if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("Invalid attendance backup.");
+  const clean={};
+  for(const [key,entry] of Object.entries(raw)){
+    if(!/^20\d\d-\d\d:\d+:\d+:\d+:[0-6]$/.test(key))throw Error("Invalid attendance date.");
+    const [p,a,b,w]=key.split(":");
+    if(!validPeriod(p)||!seed[Number(a)]?.rows[Number(b)]||!calendar(p)[Number(w)]||
+       !entry||!Object.hasOwn(dailyStatusValues(),entry.status)||!Number.isInteger(entry.minutes)||entry.minutes<0||entry.minutes>1440)
+      throw Error("Invalid attendance record.");
+    clean[key]={status:entry.status,minutes:["present","half"].includes(entry.status)?entry.minutes:0};
+  }
+  return clean;
+}
+function dailyStatusValues(){
+  return {present:1,half:1,absent:1,excused:1,leave:1,leaveUnapproved:1,rest:1};
+}
+function addAttendanceTotals(totals,entry){
+  if(entry.status==="present"||entry.status==="half"){
+    totals.worked+=entry.status==="half"?.5:1;
+    if(entry.minutes>=1){totals.lateCount++;totals.lateMinutes+=entry.minutes;}
+  }else totals[entry.status]++;
+}
+function yearlyAttendance(p){
+  const {start,end}=recordingCycle(p);
+  const people=new Map(), calendars=new Map();
+  for(const [key,entry] of Object.entries(attendance)){
+    const [p,store,crew,w,d]=key.split(":");
+    if(!calendars.has(p))calendars.set(p,calendar(p));
+    const date=dailyDate(calendars.get(p)[Number(w)],Number(d));
+    const month=date.slice(0,7);
+    if(month<start||month>end)continue;
+    const person=seed[Number(store)].rows[Number(crew)];
+    const id=person.person??store+":"+crew;
+    if(!people.has(id))people.set(id,{name:person.name,dates:new Map()});
+    const day=people.get(id).dates, original=day.get(date);
+    const assigned=validAssignment(person,date);
+    if(!original||(!original.assigned&&assigned)){
+      day.set(date,{entry,assigned,branch:seed[Number(store)].store});
+    }
+  }
+  return [...people.values()].map(({name,dates})=>{
+    const totals=Object.fromEntries(attendanceColumns.map(([key])=>[key,0]));
+    for(const {entry} of dates.values())addAttendanceTotals(totals,entry);
+    return {name,recorded:dates.size,branches:[...new Set([...dates.values()].map(d=>d.branch))].sort().join(", "),...totals};
+  }).sort((a,b)=>a.name.localeCompare(b.name)||a.branches.localeCompare(b.branches));
+}
+function attendanceSummary(p,store,crew,weeks){
+  const totals=Object.fromEntries(attendanceColumns.map(([key])=>[key,0]));
+  let required=0, recorded=0;
+  const person=seed[store].rows[crew], ranges=calendar(p);
+  for(const w of weeks)for(let d=0;d<7;d++){
+    const date=dailyDate(ranges[w],d), entry=attendance[dailyKey(p,store,crew,w,d)];
+    if(!validAssignment(person,date)&&!entry)continue;
+    required++;
+    if(!entry)continue;
+    recorded++;
+    addAttendanceTotals(totals,entry);
+  }
+  return {...totals,required,recorded};
+}
+function renderAttendance(){
+  const ranges=calendar(period), roster=seed[current].rows;
+  weekIndex=Math.min(weekIndex,ranges.length-1);
+  const week=ranges[weekIndex], dates=Array.from({length:7},(_,d)=>dailyDate(week,d));
+  el("attendanceTitle").textContent=seed[current].store+" · Attendance";
+  el("attendanceWeek").replaceChildren(...ranges.map((r,i)=>{
+    const o=document.createElement("option");o.value=i;o.textContent=r.label;return o;
+  }));
+  el("attendanceWeek").value=weekIndex;
+  const headers=attendanceColumns.map(([,label])=>label);
+  const tally=value=>value===0||value==null?"\u2014":value;
+  function row(tag,values){
+    const tr=document.createElement("tr");
+    for(const v of values){const cell=document.createElement(tag);cell.textContent=v;tr.append(cell);}
+    return tr;
+  }
+  const dayLabels=["Fri","Sat","Sun","Mon","Tue","Wed","Thu"];
+  el("attendanceHead").replaceChildren(row("th",["Crew member",...dates.map((date,d)=>dayLabels[d]+" · "+date.slice(5))]));
+  const records=roster.map((crew,index)=>({crew,index})).filter(({crew,index})=>
+    isPicked(period,current,index,weekIndex)&&dates.some(date=>validAssignment(crew,date)));
+  const activeIds=new Set(records.map(({index})=>index));
+  const showFormer=el("showFormerAttendance");
+  const shownInTotals=crew=>showFormer.checked||dates.some(date=>validAssignment(crew,date));
+  showFormer.onchange=()=>{renderAttendanceWeek();renderAttendanceMonth();};
+  el("attendanceRows").replaceChildren(...records.map(({crew,index})=>{
+    const tr=row("td",[crew.name]);
+    for(const [d,date] of dates.entries()){
+      const key=dailyKey(period,current,index,weekIndex,d), saved=attendance[key];
+      const cell=tr.insertCell();cell.className="attendance-day";
+      if(!validAssignment(crew,date)){cell.textContent=saved?dailyStatuses[saved.status]:"—";continue;}
+      const status=document.createElement("select"), minutes=document.createElement("input");
+      status.setAttribute("aria-label",crew.name+" "+date+" attendance");
+      for(const [value,name] of [["","Unrecorded"],...Object.entries(dailyStatuses)]){
+        const o=document.createElement("option");o.value=value;o.textContent=name;status.append(o);
+      }
+      status.value=saved?.status??"present";
+      minutes.type="number";minutes.min=0;minutes.max=1440;minutes.step=1;
+      minutes.placeholder="Late min";minutes.value=saved?.minutes||"";
+      minutes.setAttribute("aria-label",crew.name+" "+date+" late minutes");
+      const worked=()=>["present","half"].includes(status.value);
+      function markCell(){
+        const record=attendance[key];
+        cell.className="attendance-day"+(!record?" attendance-pending":record.status!=="present"?" attendance-exception":"");
+        status.title=record?"Saved attendance":"Worked · unsaved default";
+      }
+      markCell();
+      minutes.disabled=!worked();
+      status.onchange=()=>{
+        minutes.disabled=!worked();
+        if(!worked())minutes.value="";
+        if(status.value)attendance[key]={status:status.value,minutes:worked()&&minutes.validity.valid?(minutes.valueAsNumber||0):0};
+        else {delete attendance[key];status.value="present";minutes.disabled=false;}
+        save();markCell();renderAttendanceWeek();renderAttendanceMonth();renderAttendanceYear();
+      };
+      minutes.oninput=()=>{
+        if(!minutes.validity.valid||!worked())return;
+        attendance[key]={status:status.value,minutes:minutes.valueAsNumber||0};
+        save();markCell();renderAttendanceWeek();renderAttendanceMonth();renderAttendanceYear();
+      };
+      cell.append(status,minutes);
+    }
+    return tr;
+  }));
+  if(!records.length){
+    const empty=row("td",["No active payroll crew selected for this store and week."]);
+    empty.firstChild.colSpan=8;
+    el("attendanceRows").replaceChildren(empty);
+  }
+  renderAttendanceWeek();
+  renderAttendanceMonth();
+  renderAttendanceYear();
+  function renderAttendanceWeek(){
+    el("attendanceWeekHead").replaceChildren(row("th",["Crew member","Dates saved",...headers]));
+    const totals=roster.map((crew,index)=>({name:crew.name,active:activeIds.has(index),stats:attendanceSummary(period,current,index,[weekIndex]),shown:shownInTotals(crew)})).filter(r=>r.shown&&(r.active||r.stats.recorded));
+    el("attendanceWeekRows").replaceChildren(...totals.map(({name,active,stats})=>row("td",[name,active?tally(stats.recorded)+" / "+stats.required:tally(stats.recorded),...attendanceColumns.map(([key])=>tally(stats[key]))])));
+    const pending=records.reduce((n,{crew,index})=>n+dates.filter((date,d)=>validAssignment(crew,date)&&!attendance[dailyKey(period,current,index,weekIndex,d)]).length,0);
+    el("saveAttendanceDefaults").disabled=pending===0;
+    el("attendanceStatus").textContent=!records.length?"Select crew in Weekly Payroll to start attendance.":pending?pending+" dates are showing the unsaved Worked default.":"Attendance is saved for all selected crew dates.";
+  }
+  function renderAttendanceYear(){
+    const cycle=recordingCycle(period), totals=yearlyAttendance(period);
+    el("attendanceYearTitle").textContent="Yearly attendance totals · "+cycle.label;
+    el("attendanceYearNote").textContent="All stores · Totals use recorded attendance dates within this cycle. Linked store transfers are combined under one crew member.";
+    el("attendanceYearHead").replaceChildren(row("th",["Crew member","Stores","Recorded dates",...headers]));
+    if(totals.length){
+      el("attendanceYearRows").replaceChildren(...totals.map(r=>row("td",[r.name,r.branches,tally(r.recorded),...attendanceColumns.map(([key])=>tally(r[key]))])));
+    }else{
+      const empty=row("td",["No attendance recorded for this cycle."]);
+      empty.firstChild.colSpan=headers.length+3;
+      el("attendanceYearRows").replaceChildren(empty);
+    }
+  }
+  function renderAttendanceMonth(){
+    el("attendanceMonthHead").replaceChildren(row("th",["Crew member",...headers]));
+    const results=roster.map((crew,index)=>({name:crew.name,shown:shownInTotals(crew),summary:attendanceSummary(period,current,index,ranges.map((_,i)=>i))}));
+    el("attendanceMonthRows").replaceChildren(...results.filter(r=>r.shown&&(r.summary.required||r.summary.recorded)).map(r=>
+      row("td",[r.name,...attendanceColumns.map(([key])=>tally(r.summary[key]))])));
+  }
+}
+function saveDefaultWorkedDays(p,store,w){
+  let count=0;
+  const week=calendar(p)[w];
+  for(const [index,crew] of seed[store].rows.entries())for(let d=0;d<7;d++){
+    const key=dailyKey(p,store,index,w,d);
+    if(!isPicked(p,store,index,w)||attendance[key]||!validAssignment(crew,dailyDate(week,d)))continue;
+    attendance[key]={status:"present",minutes:0};
+    count++;
+  }
+  return count;
+}
+el("manageAttendanceCrew").onclick=()=>showMode("weekly");
+el("saveAttendanceDefaults").onclick=()=>{
+  const count=saveDefaultWorkedDays(period,current,weekIndex);
+  save();renderAttendance();
+  el("attendanceStatus").textContent=count+" default Worked days saved for this week.";
+};
+function applyAttendanceToWeek(p,store,w){
+  const roster=seed[store].rows, data=periodData(p)[store];
+  let applied=0;
+  for(const [index] of roster.entries()){
+    if(!isPicked(p,store,index,w))continue;
+    const stats=attendanceSummary(p,store,index,[w]);
+    if(!stats.required||stats.recorded!==stats.required)continue;
+    data[index][w].days=stats.worked;
+    const records=payroll[p]??(payroll[p]={});
+    const key=[store,index,w].join(":");
+    const extras=records[key]??(records[key]={});
+    extras.lateDays=stats.lateCount;
+    applied++;
+  }
+  return applied;
+}
+el("attendanceWeek").onchange=()=>{weekIndex=Number(el("attendanceWeek").value);renderAttendance();};
+el("applyAttendance").onclick=()=>{
+  if(!confirm("Replace days worked and late-day counts in payroll for selected crew with a complete attendance week?"))return;
+  const applied=applyAttendanceToWeek(period,current,weekIndex);save();renderAttendance();
+  el("attendanceStatus").textContent=applied?applied+" crew updated in Weekly Payroll. Incomplete attendance was left as entered.":"No selected crew had complete attendance for this week.";
+};
+
+function payrollToday(){
+  const pieces=new Intl.DateTimeFormat("en",{timeZone:"Asia/Manila",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
+  const part=type=>pieces.find(x=>x.type===type).value;
+  return [part("year"),part("month"),part("day")].join("-");
+}
+function employeeAssignments(){
+  const people=new Map();
+  seed.forEach((store,a)=>store.rows.forEach((crew,b)=>{
+    const id=crew.person??a+":"+b;
+    if(!people.has(id))people.set(id,[]);
+    people.get(id).push({crew,a,b,branch:store.store});
+  }));
+  return people;
+}
+function cleanWithdrawals(raw){
+  if(raw===undefined)return [];
+  if(!Array.isArray(raw))throw Error("Invalid savings withdrawals.");
+  const people=employeeAssignments();
+  return raw.map(record=>{
+    if(!record||!people.has(record.person)||!isDate(record.date)||!Number.isSafeInteger(record.cents)||record.cents<=0||
+      !seed[record.store]||!people.get(record.person).some(a=>a.a===record.store))throw Error("Invalid savings withdrawal record.");
+    return {person:record.person,date:record.date,cents:record.cents,store:record.store,...(record.newEntry===true?{newEntry:true}:{})};
+  });
+}
+function accountChoices(store){
+  return [...employeeAssignments()].filter(([,assignments])=>assignments.some(a=>a.a===store))
+    .map(([id,a])=>({id,name:a.at(-1).crew.name})).sort((a,b)=>a.name.localeCompare(b.name));
+}
+function fillAccountChoices(id,store,includeHistory=false){
+  const select=el(id), previous=select.value, choices=accountChoices(store);
+  if(includeHistory)importedSavings.forEach((r,i)=>{if(r.store===store&&!r.person&&!r.sourceName.startsWith("Unidentified"))choices.push({id:"savings-archive:"+i,name:r.sourceName+" (historical)"});});
+  select.replaceChildren(...choices.map(choice=>{
+    const option=document.createElement("option");option.value=choice.id;option.textContent=choice.name;return option;
+  }));
+  select.value=choices.some(c=>c.id===previous)?previous:choices[0]?.id??"";
+}
+function hasImportedSavingsWeek(person,store,week){
+  const thursday=dateISO(week.end), saturday=new Date(week.end);
+  saturday.setUTCDate(saturday.getUTCDate()+2);
+  const saturdayDate=dateISO(saturday);
+  return importedSavings.some(r=>r.person===person&&r.store===store&&r.deposits.some(([date])=>date===thursday||date===saturdayDate));
+}
+function recordedSavingsWithdrawals(){
+  const key=(person,store,date,cents)=>JSON.stringify([person,store,date,cents]);
+  const overlaps=new Map();
+  for(const row of importedSavings){
+    if(!row.person)continue;
+    for(const [date,cents] of row.withdrawals){
+      const id=key(row.person,row.store,date,cents);
+      overlaps.set(id,(overlaps.get(id)??0)+1);
+    }
+  }
+  return withdrawals.filter(row=>{
+    if(row.newEntry)return true;
+    const id=key(row.person,row.store,row.date,row.cents);
+    const count=overlaps.get(id)??0;
+    if(!count)return true;
+    overlaps.set(id,count-1);
+    return false;
+  });
+}
+function savingsAccount(person,date){
+  const assignments=employeeAssignments().get(person)??[];
+  const entries=[];
+  importedSavings.forEach((record,i)=>{
+    if((record.person??"savings-archive:"+i)!==person)return;
+    const branch=seed[record.store].store;
+    record.deposits.forEach(([day,cents])=>{if(day<=date)entries.push({date:day,branch,label:"Imported savings",credit:cents,debit:0});});
+    record.withdrawals.forEach(([day,cents])=>{if(!day||day<=date)entries.push({date:day??"Undated",branch,label:"Imported withdrawal",credit:0,debit:cents});});
+  });
+  for(const {a,b,branch} of assignments)for(const [p,storeEntries] of Object.entries(periods)){
+    const weeks=calendar(p);
+    storeEntries[a][b].forEach((entry,w)=>{
+      const end=dateISO(weeks[w].end);
+      if(end>date||entry.days===null||entry.rate===null||!isPicked(p,a,b,w)||hasImportedSavingsWeek(person,a,weeks[w]))return;
+      const extras=payroll[p]?.[[a,b,w].join(":")]??{};
+      const credit=savingsDeduction(entry,extras);
+      if(credit>0)entries.push({date:end,branch,label:"Payroll savings · "+weeks[w].label,credit,debit:0});
+    });
+  }
+  recordedSavingsWithdrawals().filter(x=>x.person===person&&x.date<=date).forEach(x=>{
+    entries.push({date:x.date,branch:seed[x.store].store,label:"Savings withdrawal",credit:0,debit:x.cents});
+  });
+  entries.sort((a,b)=>a.date.localeCompare(b.date)||a.debit-b.debit);
+  let balance=0,credit=0,debit=0;
+  for(const line of entries){credit+=line.credit;debit+=line.debit;balance+=line.credit-line.debit;line.balance=balance;}
+  return {entries,credit,debit,balance};
+}
+function resignedForSavings(person,date){
+  const assignments=employeeAssignments().get(person)??[];
+  const final=assignments.filter(({crew})=>!crew.start||crew.start<=date)
+    .sort((a,b)=>(b.crew.start??"").localeCompare(a.crew.start??""))[0]?.crew;
+  return Boolean(final?.end&&!final.transferred&&final.end<=date&&
+    !assignments.some(({crew})=>(crew.start&&crew.start>date)||!crew.end||crew.end>date));
+}
+function withdrawalLimit(person,date){
+  const {balance,credit,debit}=savingsAccount(person,date);
+  const reserve=resignedForSavings(person,date)?0:requiredSavings;
+  return {balance,credit,debit,reserve,max:Math.max(0,balance-reserve)};
+}
+function recordSavingsWithdrawal(person,date,value,store,today=payrollToday()){
+  const assignments=employeeAssignments().get(person);
+  if(!assignments?.some(a=>a.a===store)||!isDate(date)||date>today||!Number.isSafeInteger(value)||value<=0)throw Error("Enter a crew member, a valid date, and a positive amount.");
+  if(withdrawals.some(x=>x.person===person&&x.date>date))throw Error("The date must be on or after this crew member’s latest withdrawal.");
+  const {max}=withdrawalLimit(person,date);
+  if(value>max)throw Error("Available to withdraw on this date: PHP "+amount(max)+".");
+  withdrawals.push({person,date,cents:value,store,newEntry:true});
+}
+function renderImportedSavings(){
+  const names=new Map(accountChoices(current).map(x=>[x.id,x.name]));
+  function row(values){
+    const tr=document.createElement("tr");
+    values.forEach(v=>tr.insertCell().textContent=v);
+    return tr;
+  }
+  const records=importedSavings.filter(r=>r.store===current).map(r=>{
+    const credits=r.deposits.reduce((n,line)=>n+line[1],0), debits=r.withdrawals.reduce((n,line)=>n+line[1],0);
+    return {name:names.get(r.person)??r.sourceName,credits,debits,linked:Boolean(r.person)};
+  });
+  el("importedSavingsRows").replaceChildren(...records.map(r=>row([
+    r.name,amount(r.credits),amount(r.debits),amount(r.credits-r.debits),r.linked?"Linked to crew":"Review source"
+  ])));
+  const credits=records.reduce((n,r)=>n+r.credits,0), debits=records.reduce((n,r)=>n+r.debits,0);
+  el("importedSavingsTotal").replaceChildren(row(["SOURCE TOTAL",amount(credits),amount(debits),amount(credits-debits),""]));
+}
+function renderWithdrawals(){
+  const today=payrollToday(), input=el("withdrawalDate");
+  input.max=today;
+  if(!input.value)input.value=today;
+  fillAccountChoices("withdrawalCrew",current);
+  renderWithdrawalHistory();
+  refreshWithdrawalLimit();
+}
+function renderWithdrawalHistory(){
+  const filter=el("withdrawalFilter"), previous=filter.value;
+  const names=new Map(accountChoices(current).map(x=>[x.id,x.name]));
+  const imported=[];
+  importedSavings.forEach((record,index)=>{
+    if(record.store!==current||!record.withdrawals.length)return;
+    const id=record.person??"savings-archive:"+index;
+    if(!names.has(id))names.set(id,record.sourceName);
+    record.withdrawals.forEach(([date,cents])=>imported.push({person:id,date,cents}));
+  });
+  function option(value,label){
+    const node=document.createElement("option");node.value=value;node.textContent=label;return node;
+  }
+  const crew=[...names].sort((a,b)=>a[1].localeCompare(b[1]));
+  filter.replaceChildren(option("","All crew"),...crew.map(([id,name])=>option(id,name)));
+  filter.value=names.has(previous)?previous:"";
+  const rows=[...recordedSavingsWithdrawals().filter(x=>x.store===current),...imported]
+    .filter(x=>!filter.value||x.person===filter.value)
+    .sort((a,b)=>(b.date??"").localeCompare(a.date??""));
+  el("withdrawalFilteredTotal").textContent=amount(rows.reduce((total,row)=>total+row.cents,0));
+  if(!rows.length){
+    const row=document.createElement("tr"), cell=row.insertCell();
+    cell.colSpan=3;cell.textContent="No withdrawals match this filter.";
+    el("withdrawalRows").replaceChildren(row);
+    return;
+  }
+  el("withdrawalRows").replaceChildren(...rows.map(x=>{
+    const tr=document.createElement("tr");
+    [names.get(x.person),x.date??"Undated",amount(x.cents)].forEach(v=>tr.insertCell().textContent=v);
+    return tr;
+  }));
+}
+el("withdrawalFilter").onchange=renderWithdrawalHistory;
+function refreshWithdrawalLimit(){
+  const id=el("withdrawalCrew").value,date=el("withdrawalDate").value;
+  if(!id||!isDate(date))return;
+  const {balance,max}=withdrawalLimit(id,date);
+  el("withdrawalStatus").textContent="Savings balance: PHP "+amount(balance)+" · Available to withdraw: PHP "+amount(max);
+}
+el("withdrawalDate").onchange=refreshWithdrawalLimit;
+el("withdrawalCrew").onchange=refreshWithdrawalLimit;
+el("withdrawalForm").onsubmit=event=>{
+  event.preventDefault();
+  const id=el("withdrawalCrew").value,date=el("withdrawalDate").value, value=cents(el("withdrawalAmount").valueAsNumber);
+  try{
+    recordSavingsWithdrawal(id,date,value,current);
+    save();el("withdrawalAmount").value="";renderWithdrawals();
+    el("withdrawalStatus").textContent="Withdrawal recorded. "+el("withdrawalStatus").textContent;
+  }catch(error){el("withdrawalStatus").textContent=error.message;}
+};
+function branchWithdrawableBalances(store,date){
+  const rows=[];
+  for(const [id,assignments] of employeeAssignments()){
+    const previous=assignments.filter(({crew})=>!crew.start||crew.start<=date);
+    const last=previous.sort((a,b)=>(b.crew.start??"").localeCompare(a.crew.start??""))[0];
+    if(!last||last.a!==store)continue;
+    const resigned=resignedForSavings(id,date);
+    if(!resigned&&last.crew.end&&last.crew.end<date)continue;
+    const limits=withdrawalLimit(id,date);
+    if(resigned&&limits.balance===0)continue;
+    rows.push({name:last.crew.name,status:resigned?"Resigned":"Active",...limits});
+  }
+  importedSavings.forEach((source,index)=>{
+    if(source.store!==store||source.person)return;
+    const {entries,credit,debit,balance}=savingsAccount("savings-archive:"+index,date);
+    if(entries.length)rows.push({name:source.sourceName,status:"For review",credit,debit,balance,reserve:null,max:null});
+  });
+  rows.sort((a,b)=>a.name.localeCompare(b.name));
+  return {rows,balance:rows.reduce((n,r)=>n+r.balance,0),available:rows.reduce((n,r)=>n+(r.max??0),0)};
+}
+async function downloadWithdrawableBalances(format){
+  const store=current, branch=seed[store].store, date=el("withdrawalDate").value||payrollToday();
+  const status=el("withdrawableReportStatus");
+  const buttons=[el("withdrawablePDF"),el("withdrawableJPG")];
+  if(!isDate(date)||date>payrollToday()){status.textContent="Choose a report date on or before today.";return;}
+  try{
+    buttons.forEach(button=>button.disabled=true);
+    status.textContent="Preparing the branch report…";
+    const report=branchWithdrawableBalances(store,date);
+    const image=individualStatementPage(branch,"Savings Withdrawal Balances","As of "+date,
+      [["Recorded savings balance",report.balance],["Available to withdraw",report.available]],
+      ["Crew member","Status","Deposits","Withdrawn","Balance","Reserve","Available"],
+      report.rows.length?report.rows.map(r=>[r.name,r.status,amount(r.credit),amount(r.debit),amount(r.balance),amount(r.reserve),amount(r.max)]):
+        [["No crew balances for this date","","","","","",""]],
+      "Amounts in PHP. Active crew retain PHP 1,500. For review rows are excluded from available withdrawals.",
+      [36,185,245,304,366,428,491,559]);
+    const blob=await new Promise(resolve=>image.toBlob(resolve,"image/jpeg",.96));
+    if(!blob)throw Error("The browser could not render the branch report.");
+    const jpg=new Uint8Array(await blob.arrayBuffer()), filename=branch.replaceAll(" ","_")+"_Savings_Withdrawal_Balances_"+date+"."+format;
+    download(filename,format==="pdf"?pdf(jpg,image.width,image.height):jpg,format==="pdf"?"application/pdf":"image/jpeg");
+    status.textContent="Savings withdrawal balances report downloaded.";
+  }catch(error){status.textContent=error.message;}finally{buttons.forEach(button=>button.disabled=false);}
+}
+el("withdrawablePDF").onclick=()=>downloadWithdrawableBalances("pdf");
+el("withdrawableJPG").onclick=()=>downloadWithdrawableBalances("jpg");
+function payStatementData(person,p,asOf=null){
+  const year=p.slice(0,4), entries=[];
+  for(const {crew,a,b,branch} of employeeAssignments().get(person)??[]){
+    if(year==="2026"&&crew.prior&&(!asOf||asOf>="2026-10-29"))entries.push({date:"Opening",branch,label:"Imported basic earnings",basic:crew.prior});
+    for(const [month,storeEntries] of Object.entries(periods)){
+      if(month.slice(0,4)!==year||month>p)continue;
+      const weeks=calendar(month);
+      calculateWeeks(storeEntries[a][b]).forEach((basic,w)=>{
+        if(basic!==null&&(!asOf||dateISO(weeks[w].end)<=asOf)&&isPicked(month,a,b,w))entries.push({date:dateISO(weeks[w].end),branch,label:weeks[w].label,basic});
+      });
+    }
+  }
+  entries.sort((a,b)=>a.date==="Opening"?b.date==="Opening"?0:-1:b.date==="Opening"?1:a.date.localeCompare(b.date));
+  const basic=entries.reduce((n,x)=>n+x.basic,0);
+  const releases=payReleases.filter(x=>x.person===person&&x.year===year&&(!asOf||x.date<=asOf)).sort((a,b)=>a.date.localeCompare(b.date));
+  const paid=releases.reduce((n,x)=>n+x.cents,0), estimate=pay(basic);
+  return {entries,basic,estimate,paid,balance:estimate-paid,releases};
+}
+function cleanPayReleases(raw){
+  if(raw===undefined)return [];
+  const records=cleanWithdrawals(raw);
+  return records.map((r,i)=>{
+    const year=raw[i].year;
+    if(typeof year!=="string"||!/^20\d{2}$/.test(year)||year<"2026"||r.date.slice(0,4)<year)throw Error("Invalid 13th month earnings year.");
+    return {...r,year};
+  });
+}
+function recordPayRelease(person,year,date,value,store,today=payrollToday()){
+  const assignments=employeeAssignments().get(person);
+  if(!assignments?.some(a=>a.a===store)||!/^20\d{2}$/.test(year)||year<"2026"||
+      !isDate(date)||date>today||date.slice(0,4)<year||!Number.isSafeInteger(value)||value<=0)
+    throw Error("Enter a crew member, a valid withdrawal date, and a positive amount.");
+  if(payReleases.some(x=>x.person===person&&x.year===year&&x.date>date))
+    throw Error("The date must be on or after the latest withdrawal for this earnings year.");
+  const balance=payStatementData(person,year+"-12",date).balance;
+  if(value>Math.max(0,balance))throw Error("Available to withdraw on this date: PHP "+amount(Math.max(0,balance))+".");
+  payReleases.push({person,year,date,cents:value,store});
+}
+function renderPayReleases(){
+  const year=period.slice(0,4), today=payrollToday(), date=el("payReleaseDate");
+  date.min=year+"-01-01";date.max=today;
+  if(!date.value||date.value<date.min)date.value=today>=date.min?today:"";
+  fillAccountChoices("payReleaseCrew",current);
+  const names=new Map(accountChoices(current).map(x=>[x.id,x.name]));
+  const records=payReleases.filter(x=>x.year===year&&names.has(x.person)).slice().sort((a,b)=>b.date.localeCompare(a.date));
+  el("payReleaseRows").replaceChildren(...records.map(x=>{
+    const row=document.createElement("tr");
+    [names.get(x.person),x.year,x.date,amount(x.cents)].forEach(v=>row.insertCell().textContent=v);
+    return row;
+  }));
+  refreshPayReleaseLimit();
+}
+function refreshPayReleaseLimit(){
+  const person=el("payReleaseCrew").value, date=el("payReleaseDate").value, year=period.slice(0,4);
+  const status=el("payReleaseStatus");
+  if(!person||!isDate(date)||date.slice(0,4)<year||date>payrollToday()){
+    status.textContent="Select a valid withdrawal date for earnings year "+year+".";
+    return;
+  }
+  const data=payStatementData(person,year+"-12",date);
+  status.textContent=year+" earnings · Estimated pay: PHP "+amount(data.estimate)+" · Withdrawn: PHP "+amount(data.paid)+" · Available: PHP "+amount(Math.max(0,data.balance));
+  if(data.balance<0)status.textContent+=" · Amount withdrawn exceeds recorded earnings by PHP "+amount(-data.balance)+".";
+}
+el("payReleaseDate").onchange=refreshPayReleaseLimit;
+el("payReleaseCrew").onchange=refreshPayReleaseLimit;
+el("payReleaseForm").onsubmit=event=>{
+  event.preventDefault();
+  try{
+    recordPayRelease(el("payReleaseCrew").value,period.slice(0,4),el("payReleaseDate").value,cents(el("payReleaseAmount").valueAsNumber),current);
+    save();el("payReleaseAmount").value="";renderPayReleases();
+    el("payReleaseStatus").textContent="Withdrawal recorded. "+el("payReleaseStatus").textContent;
+  }catch(error){el("payReleaseStatus").textContent=error.message;}
+};
+let statementKind="savings";
+function openCrewStatement(kind){
+  statementKind=kind;
+  fillAccountChoices("statementCrew",current,kind==="savings");
+  el("crewStatementTitle").textContent=kind==="savings"?"Savings statement of account":"13th month pay statement";
+  el("statementStatus").textContent=kind==="savings"?"Shows recorded payroll savings, withdrawals, and running balance across stores.":"Shows basic earnings through "+periodTitle(period)+" and all recorded withdrawals for that earnings year.";
+  el("crewStatement").showModal();
+}
+el("openSavingsStatement").onclick=()=>openCrewStatement("savings");
+el("openPayStatement").onclick=()=>openCrewStatement("pay");
+function individualStatementPage(name,title,subtitle,summary,headings,rows,note,columns){
+  const width=595,height=Math.max(842,290+rows.length*22);
+  const canvas=document.createElement("canvas");
+  canvas.width=width*2;canvas.height=height*2;
+  const c=canvas.getContext("2d");c.scale(2,2);
+  function rect(x,y,w,h,color){c.fillStyle=color;c.fillRect(x,y,w,h);}
+  function label(value,x,y,size=10,color="#421a1e",bold=false,align="left",max=500){
+    c.fillStyle=color;c.font=(bold?"bold ":"")+size+"px Arial";c.textAlign=align;c.fillText(String(value),x,y,max);
+  }
+  rect(0,0,width,height,"#fff");rect(36,32,523,92,"#ad1825");rect(36,32,4,92,"#ffcd32");
+  label(configuration.business,51,57,10,"#ffe283",true);label(title,51,83,22,"#fff",true);
+  label(name,51,106,13,"#ffe283",true);
+  label(subtitle,36,147,10,"#421a1e",true);
+  const card=523/summary.length;
+  summary.forEach(([key,value,formatMoney=true],i)=>{
+    const x=36+i*card;
+    rect(x,161,card-5,47,i===summary.length-1?"#ffe397":"#fff4d9");
+    label(key,x+7,178,8,"#64141b",true);label(formatMoney?"PHP "+amount(value):value,x+7,197,12,"#421a1e",true,"left",card-18);
+  });
+  const offsets=columns??(headings.length===6?[36,120,229,350,419,487,559]:headings.length===5?[36,120,229,405,482,559]:[36,122,255,451,559]);
+  rect(36,223,523,24,"#ad1825");
+  headings.forEach((cell,i)=>label(cell,offsets[i]+5,239,9,"#fff",true,"left",offsets[i+1]-offsets[i]-10));
+  rows.forEach((row,i)=>{
+    const y=247+i*22;
+    if(i%2===0)rect(36,y,523,22,"#fff8e6");
+    row.forEach((cell,j)=>label(cell,offsets[j]+5,y+14,9,"#421a1e",false,"left",offsets[j+1]-offsets[j]-10));
+  });
+  label(note,36,height-23,8,"#64141b",false,"left",523);
+  return canvas;
+}
+async function downloadCrewStatement(format){
+  const id=el("statementCrew").value, person=employeeAssignments().get(id);
+  const savings=statementKind==="savings", archive=savings&&id.startsWith("savings-archive:")?importedSavings[Number(id.split(":")[1])]:null;
+  if(!person&&!archive)return;
+  const name=person?.at(-1).crew.name??archive.sourceName, today=payrollToday();
+  const status=el("statementStatus");
+  try{
+    const data=savings?savingsAccount(id,today):payStatementData(id,period);
+    const canvas=savings?
+      individualStatementPage(name,"Savings Statement of Account","As of "+today,
+        [["Savings credited",data.credit],["Withdrawals",data.debit],["Remaining balance",data.balance]],
+        ["Date","Store","Transaction","Deposit","Withdrawal","Balance"],
+        data.entries.map(x=>[x.date,x.branch,x.label,amount(x.credit),amount(x.debit),amount(x.balance)]),
+        "Includes imported workbook transactions and savings activity recorded in the app."):
+      individualStatementPage(name,"13th Month Pay Statement","Through "+periodTitle(period),
+        [["Basic earnings",data.basic],["Estimated pay",data.estimate],["Withdrawn",data.paid],["Balance",data.balance]],
+        ["Date","Store","Transaction","Basic earnings","Withdrawal"],
+        [...data.entries.map(x=>[x.date,x.branch,"Earnings · "+x.label,amount(x.basic),"—"]),
+         ...data.releases.map(x=>[x.date,seed[x.store].store,"13th month withdrawal","—",amount(x.cents)])],
+        "Basic earnings shown through the selected month. Withdrawals cover the selected earnings year.");
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",.95));
+    if(!blob)throw Error("The browser could not render the statement.");
+    const jpg=new Uint8Array(await blob.arrayBuffer());
+    const tag=savings?today:period;
+    const filename=name.replace(/[^a-z0-9]+/gi,"_")+"_"+(savings?"Savings_Statement":"13th_Month_Pay_Statement")+"_"+tag+"."+format;
+    download(filename,format==="pdf"?pdf(jpg,canvas.width,canvas.height):jpg,format==="pdf"?"application/pdf":"image/jpeg");
+    status.textContent="Statement downloaded.";
+  }catch(error){status.textContent=error.message;}
+}
+el("statementPDF").onclick=()=>downloadCrewStatement("pdf");
+el("statementJPG").onclick=()=>downloadCrewStatement("jpg");
+function download(name,bytes,type){
+  const url=URL.createObjectURL(new Blob([bytes],{type})), a=document.createElement("a");
+  a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function weeklyRegister(store=current,p=period,w=weekIndex){
+  const roster=seed[store].rows, entries=periodData(p)[store], events=holidays[[p,store,w].join(":")]??[];
+  const selected=roster.map((person,index)=>({person,index}))
+    .filter(({index})=>isPicked(p,store,index,w));
+  const rows=selected.map(({person,index})=>{
+    const entry=entries[index][w], extras=payroll[p]?.[[store,index,w].join(":")]??{};
+    const crewHolidays=events.filter(h=>(!person.start||h.date>=person.start)&&(!person.end||h.date<=person.end));
+    const pay=regularPay(entry,extras,crewHolidays,lastSSS(index,store,p,w));
+    return {name:person.name,days:entry.days,overtime:extras.ot??0,rate:entry.rate===null?null:cents(entry.rate),pay,
+      holiday:pay.holiday,night:cents(extras.night??0),
+      deductions:deductions.map(([k])=>k==="sss"||k==="savings"||k==="late"?pay[k]:cents(extras[k]??0))};
+  });
+  const week=calendar(p)[w];
+  return {branch:seed[store].store,week,rows,totals:{
+    days:sum(rows.map(r=>r.days)),overtime:sum(rows.map(r=>r.overtime)),
+    basic:sum(rows.map(r=>r.pay.basic)),ot:sum(rows.map(r=>r.pay.ot)),
+    holiday:sum(rows.map(r=>r.holiday)),night:sum(rows.map(r=>r.night)),
+    gross:sum(rows.map(r=>r.pay.gross)),deduction:sum(rows.map(r=>r.pay.deduction)),
+    net:sum(rows.map(r=>r.pay.net)),
+    deductions:deductions.map((_,i)=>sum(rows.map(r=>r.deductions[i])))
+  }};
+}
+function weeklyPayrollPage(report){
+  const {branch,week,rows,totals}=report;
+  const exportAmount=value=>value===0?"—":amount(value);
+  const exportCount=value=>value===null||value===0?"—":value;
+  const width=1190, height=Math.max(842,376+rows.length*30+150);
+  const canvas=document.createElement("canvas");
+  canvas.width=width*2;canvas.height=height*2;
+  const c=canvas.getContext("2d");c.scale(2,2);
+  const navy="#421a1e", muted="#536574", gold="#ffe397", pale="#fff7df", left=32, right=1158;
+  function box(x,y,w,h,color){c.fillStyle=color;c.fillRect(x,y,w,h);}
+  function text(value,x,y,size=11,color=navy,bold=false,align="left",max){
+    c.fillStyle=color;c.font=(bold?"bold ":"")+size+"px Arial";c.textAlign=align;
+    if(max)c.fillText(String(value),x,y,max);else c.fillText(String(value),x,y);
+  }
+  const dateFmt=new Intl.DateTimeFormat("en-PH",{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"});
+  box(0,0,width,height,"#fff");box(left,32,right-left,108,"#ad1825");box(left,32,5,108,"#ffcd32");
+  text(configuration.business,52,62,13,"#ffe283",true);
+  text("Weekly Payroll Register",52,105,33,"#fff",true);
+  text("BRANCH",1136,63,11,"#ffe283",true,"right");
+  text(branch,1136,104,24,"#fff",true,"right");
+  text("Period covered  |  "+dateFmt.format(week.start)+" – "+dateFmt.format(week.end),left,170,15,navy,true);
+  text("Amounts in PHP",right,170,12,muted,false,"right");
+  const summary=[["CREW ON PAYROLL",rows.length],["GROSS PAY",exportAmount(totals.gross)],["DEDUCTIONS",exportAmount(totals.deduction)],["NET PAY",exportAmount(totals.net)]];
+  const cardWidth=(right-left-36)/4;
+  summary.forEach(([label,value],i)=>{
+    const x=left+i*(cardWidth+12);
+    box(x,188,cardWidth,64,i===3?gold:pale);
+    text(label,x+11,209,10,muted,true);text(value,x+11,235,20,navy,true);
+  });
+  if(!rows.length||rows.some(r=>r.days===null||r.rate===null))text("PAYROLL ENTRY INCOMPLETE",left,272,10,"#a35922",true);
+  const headings=[["Crew member"],["Days"],["OT","hours"],["Basic","rate"],["Basic","pay"],["OT rate","/ hr"],["Overtime","pay"],["Holiday","pay"],["Night","prem."],["Gross","pay"],
+    ["SSS","prem."],["PHIC"],["HDMF"],["SSS","loan"],["HDMF","loan"],["Uniform"],["Cash","adv."],["Late /","U-time"],["Savings"],["Other /","short."],["Orient.","absence"],["Total","ded."],["Net","pay"],["Employee","signature"]];
+  const widths=[134,29,30,45,47,39,44,43,39,49,...Array(11).fill(37),46,52,0];
+  widths[23]=right-left-widths.reduce((a,b)=>a+b,0);
+  const x=[left];for(const w of widths)x.push(x.at(-1)+w);
+  const groups=[[0,1,"EMPLOYEE"],[1,4,"ATTENDANCE"],[4,10,"EARNINGS"],[10,22,"DEDUCTIONS"],[22,24,"RELEASE"]];
+  for(const [a,b,label] of groups){
+    box(x[a],286,x[b]-x[a]-1,24,navy);text(label,(x[a]+x[b])/2,302,10,"#fff",true,"center");
+  }
+  headings.forEach((parts,j)=>{
+    box(x[j],310,widths[j]-1,34,j>=10&&j<=21?"#f7c5c7":"#fff1c9");
+    parts.forEach((label,k)=>text(label,(x[j]+x[j+1])/2,parts.length===1?330:323+k*11,10,navy,true,"center",widths[j]-4));
+  });
+  function drawRow(values,y,total=false,index=0){
+    box(left,y,right-left,30,total?"#ffecb0":index%2?pale:"#fff");
+    box(x[10],y,x[22]-x[10],30,total?"#f7c5c7":index%2?"#ffe6e7":"#fff0f0");
+    if(!total)box(x[22],y,widths[22],30,"#fff3cf");
+    text(values[0],left+6,y+19,10,navy,true,"left",widths[0]-12);
+    for(let i=1;i<values.length;i++)text(values[i],x[i+1]-4,y+19,9.5,navy,total||i===22,"right",widths[i]-7);
+  }
+  rows.forEach((r,i)=>drawRow([r.name,exportCount(r.days),exportCount(r.overtime),exportAmount(r.rate),exportAmount(r.pay.basic),exportAmount(r.pay.otRate),
+    exportAmount(r.pay.ot),exportAmount(r.holiday),exportAmount(r.night),exportAmount(r.pay.gross),...r.deductions.map(exportAmount),exportAmount(r.pay.deduction),exportAmount(r.pay.net),""],344+i*30,false,i));
+  const bottom=344+rows.length*30;
+  drawRow(["TOTAL AMOUNT",exportCount(totals.days),exportCount(totals.overtime),"",""+exportAmount(totals.basic),"",exportAmount(totals.ot),exportAmount(totals.holiday),exportAmount(totals.night),exportAmount(totals.gross),...totals.deductions.map(exportAmount),exportAmount(totals.deduction),exportAmount(totals.net),""],bottom,true);
+  const sign=Math.max(bottom+78,height-105);
+  [["Prepared by / Date",signOff.prepared],["Reviewed by / Date",signOff.reviewed],["Approved by / Date",signOff.approved]].forEach(([label,name],i)=>{
+    const x=left+i*392;text(name,x,sign-6,13,navy,true,"left",330);box(x,sign,330,1,"#a8b9c6");text(label,x,sign+18,11,muted);
+  });
+  box(left,height-46,right-left,1,"#dbe4eb");text(branch+" · "+week.label,left,height-27,10,muted);
+  return canvas;
+}
+async function downloadWeeklyPayroll(format){
+  const buttons=[el("downloadPayrollPDF"),el("downloadPayrollJPG")], status=el("payrollDownloadStatus");
+  buttons.forEach(b=>b.disabled=true);
+  status.textContent="Preparing the payroll register…";
+  try{
+    const report=weeklyRegister();
+    if(!report.rows.length)throw Error("Select at least one crew member for this payroll week.");
+    const canvas=weeklyPayrollPage(report), blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",.96));
+    if(!blob)throw Error("The browser could not render the payroll register.");
+    const jpg=new Uint8Array(await blob.arrayBuffer());
+    const name=report.branch.replaceAll(" ","_")+"_Weekly_Payroll_"+dateISO(report.week.start)+"_to_"+dateISO(report.week.end);
+    download(name+"."+format,format==="pdf"?pdf(jpg,canvas.width,canvas.height,842):jpg,format==="pdf"?"application/pdf":"image/jpeg");
+    status.textContent="Payroll register downloaded.";
+  }catch(error){status.textContent=error.message;}finally{buttons.forEach(b=>b.disabled=false);}
+}
+el("downloadPayrollPDF").onclick=()=>downloadWeeklyPayroll("pdf");
+el("downloadPayrollJPG").onclick=()=>downloadWeeklyPayroll("jpg");
+function page(i,p=period){
+  const result=compute(i,p,true), branch=seed[i].store, weeks=calendar(p).map(x=>x.label);
+  result.rows=result.rows.filter(r=>r.expected>0||r.november!==null);
+  const canvas=document.createElement("canvas");canvas.width=1785;canvas.height=2526+Math.max(0,result.rows.length-8)*84;
+  const c=canvas.getContext("2d");c.scale(3,3);
+  const navy="#421a1e", muted="#536574", left=42,right=553;
+  function box(x,y,w,h,color){c.fillStyle=color;c.fillRect(x,y,w,h);}
+  function label(t,x,y,pt=10,color=navy,bold=false,align="left",width){
+    c.fillStyle=color;c.font=(bold?"bold ":"")+pt+"px Arial";c.textAlign=align;
+    if(width)c.fillText(t,x,y,width);else c.fillText(t,x,y);
+  }
+  const pageHeight=canvas.height/3, footerShift=pageHeight-842;
+  box(0,0,595,pageHeight,"#fff");box(left,47,511,116,"#ad1825");box(left,47,4,116,"#ffcd32");
+  label(configuration.business,57,73,10,"#ffe283",true);
+  label("13th Month Pay Expenses",57,106,26,"#fff",true);
+  label(branch,57,137,16,"#ffe283",true);
+  label(periodTitle(p).toUpperCase(),538,137,16,"#ffe283",true,"right");
+  label("MANAGEMENT REPORT",left,193,10,muted,true);
+  label("Payroll coverage  |  "+coverage(p),right,193,10,navy,true,"right");
+  [[42,140,"CREW MEMBERS",String(result.rows.length)],[196,160,"RECORDED EARNINGS","PHP "+amount(result.earned)],
+   [370,183,"TOTAL 13TH MONTH PAY","PHP "+amount(result.expense)]].forEach(([x,w,t,v],j)=>{
+    box(x,209,w,76,j===2?"#ffe397":"#fff7df");label(t,x+11,231,8.5,muted,true);label(v,x+11,261,j===2?22:18,navy,true,"left",w-22);
+  });
+  if(result.entered<result.expected) label("PAYROLL ENTRY INCOMPLETE  |  "+result.entered+" of "+result.expected+" crew weeks entered",left,306,8.5,"#a35922",true);
+  label("Crew earnings and 13th month pay",left,326,15,navy,true);
+  label("Amounts in PHP",right,326,9,muted,false,"right");
+  const columns=weeks.length===5?[178,225,270,315,360,405,478,545]:[188,240,297,354,411,484,545];
+  box(left,343,511,42,"#ad1825");label("CREW MEMBER",50,370,8.5,"#fff",true);
+  ["Daily rate",...weeks,"Earnings","Total"].forEach((t,j)=>label(t,columns[j],370,8.3,"#fff",true,"right"));
+  const height=result.rows.length>5?28:34;
+  result.rows.forEach((r,j)=>{
+    const y=385+j*height;
+    if(j%2===0)box(left,y,511,height,"#fff7df");
+    label(r.name,50,y+19,9.3,navy,true,"left",weeks.length===5?94:108);
+    const rates=r.entries.map(w=>w.rate);
+    const rate=rates.every(x=>x===rates[0])?(rates[0]===null?"—":peso.format(rates[0])):"Varies";
+    [rate,...r.earnings.map(amount),amount(r.november),amount(r.expense)].forEach((v,k)=>label(v,columns[k],y+19,9,navy,k===columns.length-1,"right"));
+  });
+  const bottom=385+result.rows.length*height;
+  box(left,bottom,511,35,"#ffecb0");label(branch+" TOTAL",50,bottom+22,9.5,navy,true);
+  [...result.weekly,result.earned,result.expense].forEach((v,j)=>label(amount(v),columns[j+1],bottom+22,9.3,navy,true,"right"));
+  const basis=Math.max(596,bottom+56), sign=Math.max(706,basis+75);
+  label("Calculation basis",left,basis,11,navy,true);
+  label("Each crew member’s recorded earnings for the payroll weeks shown were divided by 12",left,basis+19,10,muted);
+  label("and rounded to two decimal places to calculate the 13th month pay for those weeks.",left,basis+34,10,muted);
+  box(left,sign,215,.6,"#cbd5de");box(right-215,sign,215,.6,"#cbd5de");
+  label("Prepared by / Date",left,sign+17,9,muted);label("Reviewed by / Date",right-215,sign+17,9,muted);
+  label(signOff.prepared,left,sign-5,9,navy,true,"left",215);label(signOff.reviewed,right-215,sign-5,9,navy,true,"left",215);
+  box(left,770+footerShift,511,.6,"#cbd5de");label(branch+" "+periodTitle(p),left,789+footerShift,8,muted);
+  return canvas;
+}
+const encode=s=>new TextEncoder().encode(s);
+function join(parts){
+  const out=new Uint8Array(parts.reduce((n,p)=>n+p.length,0));let cursor=0;
+  for(const part of parts){out.set(part,cursor);cursor+=part.length;}return out;
+}
+function pdf(jpg,w,h,pageWidth=595){
+  const pageHeight=Math.round(h*pageWidth/w);
+  const stream="q\n"+pageWidth+" 0 0 "+pageHeight+" 0 0 cm\n/Im0 Do\nQ\n";
+  const objects=[
+    [encode("<< /Type /Catalog /Pages 2 0 R >>")],
+    [encode("<< /Type /Pages /Kids [3 0 R] /Count 1 >>")],
+    [encode("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+pageWidth+" "+pageHeight+"] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>")],
+    [encode("<< /Type /XObject /Subtype /Image /Width "+w+" /Height "+h+" /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+jpg.length+" >>\nstream\n"),jpg,encode("\nendstream")],
+    [encode("<< /Length "+stream.length+" >>\nstream\n"+stream+"endstream")]
+  ];
+  const parts=[encode("%PDF-1.4\n")], offsets=[0];let cursor=parts[0].length;
+  objects.forEach((o,i)=>{offsets.push(cursor);const p=join([encode((i+1)+" 0 obj\n"),...o,encode("\nendobj\n")]);parts.push(p);cursor+=p.length;});
+  parts.push(encode("xref\n0 6\n0000000000 65535 f \n"+offsets.slice(1).map(o=>String(o).padStart(10,"0")+" 00000 n \n").join("")+"trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n"+cursor+"\n%%EOF\n"));
+  return join(parts);
+}
+const checks=Uint32Array.from({length:256},(_,n)=>{for(let b=0;b<8;b++)n=(n>>>1)^((n&1)?0xedb88320:0);return n;});
+function zip(files){
+  const local=[], center=[];let offset=0;
+  for(const [name,data] of files){
+    const n=encode(name);let crc=-1;for(const b of data)crc=(crc>>>8)^checks[(crc^b)&255];crc=(crc^-1)>>>0;
+    const header=new Uint8Array(30), h=new DataView(header.buffer), entry=new Uint8Array(46), e=new DataView(entry.buffer);
+    h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(12,0x21,true);h.setUint32(14,crc,true);h.setUint32(18,data.length,true);h.setUint32(22,data.length,true);h.setUint16(26,n.length,true);
+    e.setUint32(0,0x02014b50,true);e.setUint16(4,20,true);entry.set(header.slice(4,30),6);e.setUint32(42,offset,true);
+    local.push(header,n,data);center.push(entry,n);offset+=header.length+n.length+data.length;
+  }
+  const directory=join(center), end=new Uint8Array(22), e=new DataView(end.buffer);
+  e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);
+  e.setUint32(12,directory.length,true);e.setUint32(16,offset,true);
+  return join([...local,directory,end]);
+}
+el("preview").onclick=()=>{el("reportImage").src=page(current).toDataURL("image/jpeg",.94);el("report").showModal();};
+function monthlyPayrollSummary(store,p,registers){
+  const totals=key=>sum(registers.map(report=>report.totals[key]));
+  const rows=registers.map(({week,totals:t,rows})=>[
+    week.label,rows.filter(r=>r.pay.net!==null).length+" / "+rows.length,t.days??"—",
+    amount(t.basic),amount(t.gross),amount(t.deduction),amount(t.net)
+  ]);
+  rows.push(["MONTH TOTAL","",totals("days")??"—",...["basic","gross","deduction","net"].map(k=>amount(totals(k)))]);
+  return individualStatementPage(seed[store].store,"Monthly Payroll Summary",periodTitle(p),
+    [["Gross pay",totals("gross")],["Deductions",totals("deduction")],["Net pay",totals("net")]],
+    ["Payroll week","Crew ready","Days worked","Basic pay","Gross pay","Deductions","Net pay"],rows,
+    "Crew ready shows entries with calculated pay. See the weekly registers for individual amounts.",
+    [36,125,198,264,334,408,484,559]);
+}
+function monthlyAttendancePage(store,p){
+  const weeks=calendar(p).map((_,i)=>i);
+  const records=seed[store].rows.map((crew,i)=>({name:crew.name,...attendanceSummary(p,store,i,weeks)}))
+    .filter(r=>r.recorded>0);
+  const tally=value=>value===0?"—":value;
+  const headings=["Crew member","Saved","Worked","Absent","Excused","Leave","Unapproved","Rest","Late","Late min."];
+  const rows=records.map(r=>[r.name,r.recorded,...attendanceColumns.map(([key])=>tally(r[key]))]);
+  return individualStatementPage(seed[store].store,"Monthly Attendance Summary",periodTitle(p),
+    [["Crew with records",records.length,false],["Days worked",records.reduce((n,r)=>n+r.worked,0),false]],
+    headings,rows.length?rows:[["No attendance recorded"]], "Excused = absence with permission. Unapproved = leave without permission.",
+    [36,182,224,270,312,357,395,456,487,516,559]);
+}
+function monthlySavingsPage(store,p){
+  const ledger=savingsLedger(store,p), names=new Map(accountChoices(store).map(x=>[x.id,x.name]));
+  const rows=ledger.rows.filter(r=>r.month!==null).map(r=>[r.name,"Savings deposits","—",amount(r.month),"—"]);
+  const imported=importedSavings.filter(r=>r.store===store).flatMap(r=>r.withdrawals.map(([date,cents])=>({name:names.get(r.person)??r.sourceName,date,cents})));
+  const app=recordedSavingsWithdrawals().filter(r=>r.store===store).map(r=>({...r,name:names.get(r.person)}));
+  const debits=[...imported,...app].filter(r=>r.date?.startsWith(p+"-")).sort((a,b)=>a.date.localeCompare(b.date));
+  debits.forEach(r=>rows.push([r.name,"Withdrawal",r.date, "—",amount(r.cents)]));
+  const withdrawn=debits.reduce((n,r)=>n+r.cents,0);
+  return individualStatementPage(seed[store].store,"Monthly Savings Report",periodTitle(p),
+    [["Savings deposits",ledger.month],["Withdrawals",withdrawn]],
+    ["Crew member","Transaction","Date","Deposits","Withdrawals"],rows.length?rows:[["No savings activity recorded"]],
+    "Deposits follow payroll weeks. Withdrawals follow recorded dates. Undated withdrawals stay in Savings History.",
+    [36,195,315,399,474,559]);
+}
+async function monthlyExportFiles(p){
+  const files=[], tag=periodTitle(p).replaceAll(" ","_");
+  async function add(base,canvas,width){
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",.95));
+    if(!blob)throw Error("The browser could not render a JPG.");
+    const jpg=new Uint8Array(await blob.arrayBuffer());
+    files.push([base+".jpg",jpg],[base+".pdf",pdf(jpg,canvas.width,canvas.height,width)]);
+  }
+  for(const [store,branch] of seed.entries()){
+    const name=branch.store.replaceAll(" ","_"), base=name+"_"+tag;
+    const registers=calendar(p).map((_,w)=>weeklyRegister(store,p,w));
+    await add("Payroll/"+name+"/"+base+"_Monthly_Payroll",monthlyPayrollSummary(store,p,registers));
+    for(const report of registers){
+      await add("Payroll/"+name+"/"+name+"_Weekly_Payroll_"+dateISO(report.week.start)+"_to_"+dateISO(report.week.end),weeklyPayrollPage(report),842);
+    }
+    await add("Attendance/"+base+"_Monthly_Attendance",monthlyAttendancePage(store,p));
+    await add("Savings/"+base+"_Monthly_Savings",monthlySavingsPage(store,p));
+    await add("13th Month Pay/"+base+"_13th_Month_Pay_Expenses",page(store,p));
+  }
+  return files;
+}
+el("export").onclick=async()=>{
+  const button=el("export"), status=el("monthlyExportStatus"), p=period;
+  button.disabled=true;status.hidden=false;status.textContent="Generating monthly reports for all four stores…";
+  try{
+    const files=await monthlyExportFiles(p);
+    download(periodTitle(p).replaceAll(" ","_")+"_Reports_PDF_and_JPG.zip",zip(files),"application/zip");
+    status.textContent="Downloaded "+files.length+" report files for "+periodTitle(p)+".";
+  }catch(error){status.textContent=error.message;}finally{button.disabled=false;}
+};
+el("period").onchange=()=>{const p=el("period").value;if(validPeriod(p)){period=p;save();render();}else el("period").value=period;};
+async function savePayrollBackup(){
+  const button=el("backup"), status=el("backupStatus");
+  const name="CK_Payroll_Backup.json", type="application/json";
+  const contents=JSON.stringify({version:2,configuration,period,periods,payroll,roster:seed.map(s=>s.rows),picked,holidays,signOff,attendance,withdrawals,payReleases});
+  status.hidden=false;
+  status.textContent="";
+  if(typeof window.showSaveFilePicker!=="function"){
+    download(name,contents,type);
+    status.textContent="Backup download requested. To choose a folder, turn on the browser setting to ask where to save each download.";
+    return;
+  }
+  button.disabled=true;
+  try{
+    const handle=await window.showSaveFilePicker({id:"ck-payroll-backups",suggestedName:name,
+      types:[{description:"Payroll backup",accept:{"application/json":[".json"]}}]});
+    const writer=await handle.createWritable();
+    try{
+      await writer.write(new Blob([contents],{type}));
+      await writer.close();
+    }catch(error){
+      try{await writer.abort();}catch{}
+      throw error;
+    }
+    status.textContent="Backup saved as "+handle.name+".";
+  }catch(error){
+    if(error.name==="AbortError")status.textContent="Backup cancelled.";
+    else if(error.name==="SecurityError"){
+      download(name,contents,type);
+      status.textContent="Save As is unavailable here. The backup download was requested using your browser’s download settings.";
+    }else status.textContent="Could not save the backup. Try another folder.";
+  }finally{button.disabled=false;}
+}
+el("backup").onclick=savePayrollBackup;
+el("restore").onclick=()=>el("file").click();
+el("file").onchange=async event=>{
+  try{
+    const file=event.target.files[0];if(!file)return;
+    const saved=JSON.parse(await file.text());
+    if(!saved.configuration||JSON.stringify(saved.configuration.stores)!==JSON.stringify(configuration.stores)||
+        saved.configuration.business!==configuration.business)
+      throw Error("Restore a backup from this franchisee and the same store list. Keep other businesses in their own installation.");
+    if(saved.period===legacyKey){
+      const entries=validated(saved.entries,"2026-11");
+      if(confirm("Restore November 2026 from the old backup?")){periods["2026-11"]=entries;period="2026-11";save();render();}
+    }else{
+      if(saved.version!==2)throw Error("This file is not a payroll backup.");
+      const original=seed.map(s=>s.rows);
+      if(saved.roster){
+        if(!confirm("Restore this backup? It replaces the current crew list and payroll records."))return;
+        try{
+          useRoster(cleanRoster(saved.roster));
+          const restored=validatePeriods(saved.periods), details=validatePayroll(saved.payroll), selections=cleanPicked(saved.picked), events=cleanHolidays(saved.holidays), savedAttendance=cleanAttendance(saved.attendance), savedWithdrawals=cleanWithdrawals(saved.withdrawals), savedPayReleases=cleanPayReleases(saved.payReleases);
+          periods=restored;payroll=details;picked=selections;holidays=events;signOff=cleanSignOff(saved.signOff);attendance=savedAttendance;withdrawals=savedWithdrawals;payReleases=savedPayReleases;
+        }catch(error){useRoster(original);throw error;}
+        if(validPeriod(saved.period))period=saved.period;
+        save();render();
+      }else{
+        const restored=validatePeriods(saved.periods), restoredPayroll=validatePayroll(saved.payroll);
+        if(confirm("Merge this backup into the app? Months in the backup replace matching months.")){periods={...periods,...restored};payroll={...payroll,...restoredPayroll};if(validPeriod(saved.period))period=saved.period;save();render();}
+      }
+    }
+  }catch(error){el("status").textContent=error.message;}finally{event.target.value="";}
+};
+document.querySelector("header p").textContent=configuration.business;
+document.querySelector(".payroll-banner p").textContent=configuration.business;
+document.querySelector(".signoff").title="Edit sign-off names here";
+render();
+</script></body></html>
+

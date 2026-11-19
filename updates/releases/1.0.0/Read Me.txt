@@ -1,0 +1,46 @@
+Crispy King Franchise Payroll System - Licensed Local Edition
+Lifetime license | Windows x64 | Local SQLite
+
+INSTALL AND ACTIVATE
+Extract the entire customer ZIP. For the self-signed edition, independently
+verify the certificate fingerprint directly with the publisher and run
+Trust Publisher Certificate.cmd first. Then double-click Install.cmd.
+Open Crispy King Payroll on the desktop. Send the device code and business
+name to your supplier, then import the .cklicense file they provide.
+Enter your stores and first recording month. Sign-off names are editable.
+The buyer ZIP must first be prepared by the publisher. The owner master
+package is not a ready-to-install, preactivated customer distribution.
+
+PAYROLL
+Add crews in Weekly Payroll; record attendance before applying payroll days.
+Attendance, Payroll, 13th Month and Savings retain the existing workflows.
+Use License, backup and updates at the top for your license and updates.
+Stores are limited by the license, up to 100; 100 stores is not load-tested.
+
+UPDATES
+If your supplier configured the GitHub update repository, the app automatically
+checks at startup and every six hours while running. It downloads signed,
+verified app updates and installs them on the next restart.
+Save all open payroll tabs, then use Restart and install on the product page.
+The update process backs up the database and previous application files.
+If the new server fails its startup health check, the previous files are
+restored. Your active payroll database is never automatically replaced.
+Runtime upgrades or a change to the publisher keys require a new installer.
+An internet connection is needed only to check/download updates, not to use
+an activated local app. Failed checks leave the current app usable.
+
+BACKUPS AND LICENSES
+Data is stored in Data\payroll.sqlite under your installed user-profile folder.
+Back up entries regularly. You choose the backup destination where supported
+by your browser; otherwise its download/save settings apply.
+Restore a backup for the same business and store list.
+Newly issued licenses are lifetime, with no expiry and no periodic renewal.
+Your activated app keeps working offline when update hosting is unavailable.
+A replacement computer needs a new license from your supplier.
+No online activation server or remote revocation service is included.
+
+This source-based local edition is not tamper-proof licensing. Your supplier's
+self-signed certificate must be explicitly accepted on each customer computer.
+It is not a publicly trusted Windows certificate. Windows warnings depend on certificate
+trust and reputation; signing does not guarantee warnings disappear.
+Runtime licenses are in runtime\LICENSE.txt.
