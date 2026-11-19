@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Activate Crispy King Payroll</title><style>
+*{box-sizing:border-box}body{margin:0;background:#fff9ed;color:#421a1e;font:16px Arial}main{max-width:740px;margin:40px auto;padding:28px;background:white;border:1px solid #ebd9ce;border-radius:14px;border-top:8px solid #b21826}h1{font-size:28px}h2{font-size:20px}p{line-height:1.6}textarea{width:100%;font:14px monospace;padding:12px;min-height:90px;border:1px solid #c9aaa0;border-radius:6px}button,a.button{display:inline-block;background:#b21826;color:white;border:0;border-radius:6px;padding:12px 18px;font:inherit;cursor:pointer;margin:10px 6px 10px 0;text-decoration:none}#status{color:#b21826}.device{word-break:break-all;background:#fff1c9;padding:14px;user-select:all}
+
+/* Unified visual system across payroll, setup, activation and product settings. */
+@media screen{
+:root{--ui-red:#ad1825;--ui-yellow:#ffcd32;--ui-text:#344054;--ui-muted:#667085;--ui-border:#dce2eb;--ui-soft:#fff9e9;--ui-radius:10px;--ui-shadow:0 6px 22px #27344b08}
+body{font-family:"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+button,input,select,textarea,summary,a.button{font-family:inherit;letter-spacing:normal}
+button,a.button{border-radius:9px;min-height:38px;line-height:1.35;font-weight:600;transition:background .15s,border-color .15s,box-shadow .15s}
+button:disabled{opacity:.55;cursor:not-allowed}button:not(:disabled):hover{box-shadow:0 2px 7px #27344b0c}
+input:not([type=checkbox]):not([type=radio]):not([type=file]),select,textarea{border:1px solid var(--ui-border);border-radius:9px;background:#fff;color:var(--ui-text);min-height:40px;padding:9px 11px;font-size:13px;line-height:1.4;transition:border-color .15s,box-shadow .15s}
+input::placeholder,textarea::placeholder{color:#8993a3}input[readonly]{background:#f5f7fa!important;color:#647084!important}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #ad18252b!important;outline-offset:3px;border-color:var(--ui-red)!important;box-shadow:none!important}
+input[type=checkbox],input[type=radio]{accent-color:var(--ui-red);width:18px;height:18px;min-height:18px;flex-shrink:0;vertical-align:middle;cursor:pointer}
+input[type=file]{box-sizing:border-box;max-width:100%;padding:7px;border:1px dashed #cdd4df;border-radius:9px;font-size:12px;background:#fafbfc;color:var(--ui-muted)}
+input[type=file]::file-selector-button{border:1px solid #eddca8;border-radius:6px;background:#fff3cf;color:#7f2630;font:600 12px "Segoe UI",Arial,sans-serif;padding:9px 12px;margin-right:12px;cursor:pointer}
+textarea{resize:vertical;line-height:1.7}select{cursor:pointer}label{line-height:1.5}
+dialog{border:1px solid var(--ui-border);border-radius:16px;box-shadow:0 24px 80px #17243d36;background:white;color:var(--ui-text)}
+dialog::backdrop{background:#19253b70;backdrop-filter:blur(3px)}dialog h2{font-weight:700;letter-spacing:-.35px}
+details>summary{cursor:pointer}a{color:var(--ui-red);text-underline-offset:3px}
+[role=status]:not(:empty){line-height:1.7}
+@media(prefers-reduced-motion:reduce){button,input,select,textarea,summary{transition:none!important;animation:none!important}}
+}
+
+@media screen{
+body{color:#344054;background:#fffaf0;font-size:14px}
+body>main{box-sizing:border-box;margin:42px auto;padding:32px;max-width:760px;width:calc(100% - 32px);border:1px solid #e6e0d5;border-top:6px solid #ad1825;border-radius:16px;box-shadow:0 10px 40px #382c1909}
+main h1{font-size:26px;letter-spacing:-.6px;line-height:1.3;color:#7f1b27;margin:12px 0 14px}
+main h2{font-size:18px;letter-spacing:-.25px;line-height:1.4;margin:28px 0 12px;color:#424e62}
+main p{font-size:13px;color:#687488;line-height:1.85;margin:12px 0}
+main>label,main p>label{font-size:12px;font-weight:650;color:#58667b}
+.card,.device{border:1px solid #efdfaf;border-radius:10px;background:#fff7df;padding:18px;font-size:12px;line-height:1.85;color:#6d5735;overflow-wrap:anywhere}
+.device{font-family:Consolas,monospace;user-select:all;letter-spacing:.5px}
+textarea{box-sizing:border-box;min-height:130px;width:100%;padding:13px;background:#fafbfc;font-family:Consolas,monospace;font-size:12px;line-height:1.7}
+main button,main a.button{font-size:13px;padding:11px 18px;background:#ad1825;color:#fff;border:1px solid #ad1825;border-radius:9px;margin-top:16px}
+#status:not(:empty){margin-top:20px;border:1px solid #efdfaf;background:#fff9e9;padding:12px 14px;border-radius:9px;color:#7c2933;font-size:13px}
+main>a:first-child{display:inline-flex;align-items:center;font-size:12px;font-weight:600;text-decoration:none;margin-bottom:8px}
+@media(max-width:550px){body>main{padding:23px;margin:20px auto}main h1{font-size:23px}main button{max-width:100%}}
+}
+
+</style></head><body><main><h1>Crispy King Franchise Payroll System</h1><h2>Activate this computer</h2><p>Send your supplier this device code and your business name. Your supplier will issue a license file for this computer.</p><div class="device" id="device">Loading device code…</div><p><label for="license">Choose the license file supplied to you</label></p><input type="file" id="license" accept=".cklicense,.json"><p>Or paste its complete contents below.</p><textarea id="text" aria-label="License contents"></textarea><button id="activate">Activate payroll</button><a href="/manage">Backup and product details</a><p id="status" role="status"></p></main><script src="/support.js"></script><script>
+const get=id=>document.getElementById(id);productRequest('/product').then(p=>{get('device').textContent=p.deviceId;get('status').textContent=p.error||'Already activated.';}).catch(e=>get('status').textContent=e.message);
+get('license').onchange=async()=>{const f=get('license').files[0];if(f){if(f.size>30000){get('status').textContent='License file is too large.';return;}get('text').value=await f.text();}};
+get('activate').onclick=async()=>{try{await productRequest('/activate',JSON.parse(get('text').value));location.href='/';}catch(e){get('status').textContent=e.message;}};
+</script></body></html>

@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>License and updates</title><style>
+*{box-sizing:border-box}body{margin:0;background:#fff9ed;color:#421a1e;font:16px Arial}main{max-width:760px;margin:35px auto;background:white;border:1px solid #ebd9ce;border-radius:14px;padding:28px;border-top:8px solid #b21826}h1{font-size:28px}h2{font-size:20px;margin-top:28px}p{line-height:1.6}.card{padding:16px;background:#fff1c9;border-radius:8px;white-space:pre-line;overflow-wrap:anywhere}button{background:#b21826;color:white;border:0;border-radius:6px;padding:12px 16px;font:inherit;cursor:pointer;margin:8px 4px 8px 0}button:disabled{opacity:.5;cursor:default}textarea{width:100%;min-height:80px}#status{color:#b21826}
+
+/* Unified visual system across payroll, setup, activation and product settings. */
+@media screen{
+:root{--ui-red:#ad1825;--ui-yellow:#ffcd32;--ui-text:#344054;--ui-muted:#667085;--ui-border:#dce2eb;--ui-soft:#fff9e9;--ui-radius:10px;--ui-shadow:0 6px 22px #27344b08}
+body{font-family:"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+button,input,select,textarea,summary,a.button{font-family:inherit;letter-spacing:normal}
+button,a.button{border-radius:9px;min-height:38px;line-height:1.35;font-weight:600;transition:background .15s,border-color .15s,box-shadow .15s}
+button:disabled{opacity:.55;cursor:not-allowed}button:not(:disabled):hover{box-shadow:0 2px 7px #27344b0c}
+input:not([type=checkbox]):not([type=radio]):not([type=file]),select,textarea{border:1px solid var(--ui-border);border-radius:9px;background:#fff;color:var(--ui-text);min-height:40px;padding:9px 11px;font-size:13px;line-height:1.4;transition:border-color .15s,box-shadow .15s}
+input::placeholder,textarea::placeholder{color:#8993a3}input[readonly]{background:#f5f7fa!important;color:#647084!important}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #ad18252b!important;outline-offset:3px;border-color:var(--ui-red)!important;box-shadow:none!important}
+input[type=checkbox],input[type=radio]{accent-color:var(--ui-red);width:18px;height:18px;min-height:18px;flex-shrink:0;vertical-align:middle;cursor:pointer}
+input[type=file]{box-sizing:border-box;max-width:100%;padding:7px;border:1px dashed #cdd4df;border-radius:9px;font-size:12px;background:#fafbfc;color:var(--ui-muted)}
+input[type=file]::file-selector-button{border:1px solid #eddca8;border-radius:6px;background:#fff3cf;color:#7f2630;font:600 12px "Segoe UI",Arial,sans-serif;padding:9px 12px;margin-right:12px;cursor:pointer}
+textarea{resize:vertical;line-height:1.7}select{cursor:pointer}label{line-height:1.5}
+dialog{border:1px solid var(--ui-border);border-radius:16px;box-shadow:0 24px 80px #17243d36;background:white;color:var(--ui-text)}
+dialog::backdrop{background:#19253b70;backdrop-filter:blur(3px)}dialog h2{font-weight:700;letter-spacing:-.35px}
+details>summary{cursor:pointer}a{color:var(--ui-red);text-underline-offset:3px}
+[role=status]:not(:empty){line-height:1.7}
+@media(prefers-reduced-motion:reduce){button,input,select,textarea,summary{transition:none!important;animation:none!important}}
+}
+
+@media screen{
+body{color:#344054;background:#fffaf0;font-size:14px}
+body>main{box-sizing:border-box;margin:42px auto;padding:32px;max-width:760px;width:calc(100% - 32px);border:1px solid #e6e0d5;border-top:6px solid #ad1825;border-radius:16px;box-shadow:0 10px 40px #382c1909}
+main h1{font-size:26px;letter-spacing:-.6px;line-height:1.3;color:#7f1b27;margin:12px 0 14px}
+main h2{font-size:18px;letter-spacing:-.25px;line-height:1.4;margin:28px 0 12px;color:#424e62}
+main p{font-size:13px;color:#687488;line-height:1.85;margin:12px 0}
+main>label,main p>label{font-size:12px;font-weight:650;color:#58667b}
+.card,.device{border:1px solid #efdfaf;border-radius:10px;background:#fff7df;padding:18px;font-size:12px;line-height:1.85;color:#6d5735;overflow-wrap:anywhere}
+.device{font-family:Consolas,monospace;user-select:all;letter-spacing:.5px}
+textarea{box-sizing:border-box;min-height:130px;width:100%;padding:13px;background:#fafbfc;font-family:Consolas,monospace;font-size:12px;line-height:1.7}
+main button,main a.button{font-size:13px;padding:11px 18px;background:#ad1825;color:#fff;border:1px solid #ad1825;border-radius:9px;margin-top:16px}
+#status:not(:empty){margin-top:20px;border:1px solid #efdfaf;background:#fff9e9;padding:12px 14px;border-radius:9px;color:#7c2933;font-size:13px}
+main>a:first-child{display:inline-flex;align-items:center;font-size:12px;font-weight:600;text-decoration:none;margin-bottom:8px}
+@media(max-width:550px){body>main{padding:23px;margin:20px auto}main h1{font-size:23px}main button{max-width:100%}}
+}
+
+</style></head><body><main><a href="/">← Back to payroll</a><h1>License and updates</h1><div class="card" id="license">Loading…</div><h2>Replace or transfer a license</h2><input type="file" id="file" accept=".cklicense,.json" aria-label="Choose replacement license"><button id="activate">Apply license</button><h2>Automatic updates</h2><div class="card" id="updates"></div><p>Updates are checked at startup and every six hours while the app runs. Verified downloads install on restart. Save payroll in every open tab before restarting.</p><button id="check">Check now</button><button id="restart" disabled>Restart and install</button><h2>Keep a backup</h2><p>Your lifetime license has no renewal date. Back up your entries regularly.</p><button id="backup">Download entries backup</button><p id="status" role="status"></p></main><script src="/support.js"></script><script>
+const get=id=>document.getElementById(id);let product;
+function showUpdates(u){get('updates').textContent='Version '+u.currentVersion+'\n'+u.message+(u.readyVersion?'\nReady: '+u.readyVersion:'')+(u.lastCheck?'\nLast check: '+new Date(u.lastCheck).toLocaleString():'');get('restart').disabled=!u.readyVersion;}
+async function load(){product=await productRequest('/product');const l=product.license;get('license').textContent=(product.active?'Activated for '+l.business+'\nLicense: '+l.licenseId+'\nStores: Unlimited'+'\nLicense term: '+(l.expiresAt?new Date(l.expiresAt).toLocaleDateString():'Lifetime — no expiry'):product.error)+'\nDevice: '+product.deviceId;showUpdates(product.updates);}
+load().catch(e=>get('status').textContent=e.message);
+get('activate').onclick=async()=>{try{const f=get('file').files[0];if(!f||f.size>30000)throw new Error('Select a valid license file.');await productRequest('/activate',JSON.parse(await f.text()));await load();get('status').textContent='License applied.';}catch(e){get('status').textContent=e.message;}};
+get('check').onclick=async()=>{get('check').disabled=true;try{showUpdates(await productRequest('/updates/check',{}));}catch(e){get('status').textContent=e.message;}finally{get('check').disabled=false;}};
+get('restart').onclick=async()=>{if(!confirm('Have you saved all open payroll tabs? Restart and install the verified update now?'))return;try{await productRequest('/updates/restart',{});get('status').textContent='Restarting. Payroll will open in a new browser tab. If it does not, open the desktop shortcut.';get('restart').disabled=true;}catch(e){get('status').textContent=e.message;}};
+get('backup').onclick=async()=>{try{const r=await productRequest('/backup',{});if(!r.value)throw new Error('No payroll entries have been saved yet.');const name='CK_Payroll_Backup_'+new Date().toISOString().slice(0,10)+'.json';if(window.showSaveFilePicker){const handle=await window.showSaveFilePicker({suggestedName:name,types:[{description:'Payroll backup',accept:{'application/json':['.json']}}]});const stream=await handle.createWritable();await stream.write(r.value);await stream.close();get('status').textContent='Backup saved.';}else{const blob=new Blob([r.value],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}}catch(e){if(e.name!=='AbortError')get('status').textContent=e.message;}};
+</script></body></html>
