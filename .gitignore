@@ -1,0 +1,12 @@
+**/Private/
+**/Data/
+**/PublisherTools/
+**/IssuedLicenses/
+**/CustomerPackages/
+*.pem
+*.pfx
+*.p12
+*.cklicense
+*.sqlite*
+*.zip
+*Backup*.json
